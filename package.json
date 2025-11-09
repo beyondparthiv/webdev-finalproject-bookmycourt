@@ -1,0 +1,9 @@
+{
+  "name": "webdev-finalproject-bookmycourt",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "cd client && npm run dev",
+    "server": "cd server && node index.js"
+  }
+}
