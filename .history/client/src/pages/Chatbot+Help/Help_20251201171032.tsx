@@ -3,7 +3,6 @@ import { Chatbot } from './Chatbot';
 import { ContactForm } from './ContactForm';
 import { FAQ } from './FAQ';
 import { Rules } from './Rules';
-import { GeminiService } from './services/GeminiClient';
 
 export const Contact: React.FC = () => {
   const [geminiService, setGeminiService] = useState<GeminiService | null>(null);

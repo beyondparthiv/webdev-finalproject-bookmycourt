@@ -103,9 +103,9 @@ export const Chatbot: React.FC<ChatbotProps> = ({ geminiService }) => {
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          onKeyPress={handleKeyPress}
           placeholder="Ask me anything..."
           disabled={isLoading}
-          onKeyPress={handleKeyPress}
         />
         <button 
           onClick={handleSend} 
