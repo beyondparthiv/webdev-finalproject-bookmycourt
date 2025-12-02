@@ -2,12 +2,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
-import Account from "./pages/Account";
+import Account from "./pages/Account/Account";
 import Chatbot from "./pages/Chatbot";
 import Contact from "./pages/Contact";
-import Login from "./pages/Login";
 import Map from "./pages/Map";
 import "./index.css";
+import Signin from "./pages/Account/Signin";
+import Signup from "./pages/Account/Signup";
+import Profile from "./pages/Account/Profile";
 
 function App() {
   return (
@@ -19,7 +21,9 @@ function App() {
         <Route path="/account" element={<Account />} />
         <Route path="/chatbot" element={<Chatbot />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/map" element={<Map />} />
       </Routes>
     </Router>
