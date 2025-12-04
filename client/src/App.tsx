@@ -9,6 +9,7 @@ import "./index.css";
 import Signin from "./pages/Account/Signin";
 import Signup from "./pages/Account/Signup";
 import Profile from "./pages/Account/Profile";
+import TurfDetails from './pages/TurfDetails';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/account" element={<Account />} />
         <Route path="/contact" element={<Contact/>} />
@@ -23,6 +25,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/map" element={<Map />} />
+        <Route path="/turf/:id" element={<TurfDetails />} />
       </Routes>
     </Router>
   );
