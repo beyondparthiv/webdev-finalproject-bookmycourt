@@ -34,3 +34,54 @@
   padding: 0.9rem 2rem; border-radius: 8px; font-weight: 600;
 }
 .book-btn:hover { background-color: #005fcc; }
+/* Fix text visibility */
+.booking-container h1,
+.booking-container h2,
+.booking-container h3 {
+  color: #1a1a2e;
+}
+
+.booking-container p {
+  color: #333;
+  font-size: 1rem;
+}
+
+.booking-container .subtitle,
+.booking-container p:first-of-type {
+  color: #555;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.booking-card label {
+  color: #333;
+  font-weight: 500;
+}
+
+/* Ensure all text in booking card is visible */
+.booking-card,
+.booking-card * {
+  color: #333;
+}
+
+.booking-card h1,
+.booking-card h2,
+.booking-card h3 {
+  color: #1a1a2e;
+}
+
+/* Keep button colors */
+.court-btn,
+.slot-btn {
+  color: #007bff;
+}
+
+.court-btn.selected,
+.slot-btn.selected,
+.book-btn {
+  color: white;
+}
+
+.slot-btn.booked {
+  color: #721c24;
+}

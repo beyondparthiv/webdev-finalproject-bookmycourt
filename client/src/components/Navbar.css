@@ -27,3 +27,35 @@
   border-bottom: 2px solid #00bfff;
   padding-bottom: 2px;
 }
+
+/* Fix navbar overflow and ensure all items visible */
+.navbar {
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: nowrap;
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.navbar a {
+  white-space: nowrap;
+}
+
+/* Ensure navbar doesn't get cut off */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .navbar ul {
+    gap: 1rem;
+  }
+
+  .navbar a {
+    font-size: 0.9rem;
+  }
+}
