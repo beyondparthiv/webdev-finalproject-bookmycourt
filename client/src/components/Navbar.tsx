@@ -10,11 +10,9 @@ const Navbar: React.FC = () => {
       <ul>
         <li className={location.pathname === "/" ? "active" : ""}><Link to="/">Home</Link></li>
         <li className={location.pathname === "/map" ? "active" : ""}><Link to="/map">Map</Link></li>
-        <li className={location.pathname === "/chatbot" ? "active" : ""}><Link to="/chatbot">Chatbot</Link></li>
-        <li className={location.pathname === "/account" ? "active" : ""}><Link to="/account">Account</Link></li>
         <li className={location.pathname === "/help" ? "active" : ""}><Link to="/help">Help</Link></li>
         <li className={location.pathname === "/booking" ? "active" : ""}><Link to="/booking">Booking</Link></li>
-        <li className={location.pathname === "/login" ? "active" : ""}><Link to="/login">Login</Link></li>
+        <li className={location.pathname === "/account" ? "active" : ""}><Link to="/account">Account</Link></li>
       </ul>
     </nav>
   );
