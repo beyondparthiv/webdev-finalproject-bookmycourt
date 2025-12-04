@@ -66,3 +66,37 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+/* Override dark theme for specific pages */
+.booking-container,
+.booking-container * {
+  color-scheme: light;
+}
+
+.booking-container {
+  color: #333;
+}
+
+.booking-container h1,
+.booking-container h2 {
+  color: #1a1a2e;
+}
+
+.booking-container p {
+  color: #555;
+}
+
+/* Fix body overflow and dark background */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  display: block;
+  place-items: unset;
+}

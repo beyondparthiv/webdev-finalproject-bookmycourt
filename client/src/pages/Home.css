@@ -1,16 +1,14 @@
 /* Reset and Override Global Styles for Home Page */
+/* Reset and Override Global Styles for Home Page */
 .home-container {
-  min-height: 100vh;
+  min-height: calc(100vh - 60px);
   background-color: #ffffff !important;
   padding-bottom: 20px;
-  width: 100vw;
+  width: 100%;
   max-width: 100%;
   margin: 0;
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
   color: #333;
+  overflow-x: hidden;
 }
 
 /* Top Bar */
