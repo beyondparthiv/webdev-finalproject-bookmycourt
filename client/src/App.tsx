@@ -2,9 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
+import { Contact } from "./pages/Contact/Contact";
 import Account from "./pages/Account/Account";
-import Chatbot from "./pages/Chatbot";
-import Contact from "./pages/Contact";
 import Map from "./pages/Map";
 import "./index.css";
 import Signin from "./pages/Account/Signin";
@@ -19,8 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/account" element={<Account />} />
-        <Route path="/chatbot" element={<Chatbot />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/contact" element={<Contact/>} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
