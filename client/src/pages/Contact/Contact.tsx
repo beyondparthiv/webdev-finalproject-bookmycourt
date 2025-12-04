@@ -11,7 +11,6 @@ export const Contact: React.FC = () => {
   useEffect(() => {
     // Initialize Gemini service with API key from .env to access AI Bot
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
-    console.log('API Key loaded:', apiKey ? 'Yes' : 'No');
  
     setGeminiService(new GeminiService(apiKey));
   }, []);
@@ -22,7 +21,7 @@ export const Contact: React.FC = () => {
 
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
-      <h1>Help</h1>
+      <h1>Get Help</h1>
    
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '20px', marginTop: '30px' }}>
         

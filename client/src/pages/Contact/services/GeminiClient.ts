@@ -8,7 +8,6 @@ class GeminiService {
 
   async getChatResponse(userMessage: string, conversationHistory: any[]): Promise<string> {
     const url = `${this.baseURL}/gemini-2.0-flash-lite:generateContent?key=${this.apiKey}`;
-  console.log(' API CALL STARTED for message:', userMessage);
     const recentHistory = conversationHistory
       .slice(-5)
       .map(msg => `${msg.role}: ${msg.content}`)
