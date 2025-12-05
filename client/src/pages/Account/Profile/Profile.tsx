@@ -1,7 +1,7 @@
 import * as client from "../client";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setCurrentUser } from "../reducer";
 import { Button, FormControl } from "react-bootstrap";
 import "../Account.css";
@@ -83,7 +83,8 @@ export default function Profile() {
           <Button onClick={signout} className="w-100 mb-2 btn-danger" id="wd-signout-btn">
             Sign out
           </Button>
-          <a href={`/mybookings`}>My Bookings</a>
+          <br />
+          <Link to={`/mybookings`}>My Bookings</Link>
         </div>
       )}
     </div>
