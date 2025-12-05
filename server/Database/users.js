@@ -5,6 +5,7 @@ export default [
     "password": "stark123",
     "firstName": "Tony",
     "lastName": "Stark",
+    "email": "iron@man.com",
     "role": "ADMIN"
   },
   {
@@ -13,6 +14,7 @@ export default [
     "password": "123",
     "firstName": "Bridget",
     "lastName": "Leary",
+    "email": "bl@gmail.com",
     "role": "CUSTOMER"
   }
 ]
