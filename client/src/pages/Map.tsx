@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from 'react';
+import db_locations from '../../../server/Database/locations.js';
 
 const Map: React.FC = () => {
   const mapRef = useRef<HTMLDivElement>(null);
+  const locations = db_locations;
 
   useEffect(() => {
     const initMap = async () => {
@@ -17,20 +19,23 @@ const Map: React.FC = () => {
         zoom: 13,
         mapId: 'DEMO_MAP_ID',
       });
+ // Add markers for each location
+      locations.forEach(location => {
+        const marker = new AdvancedMarkerElement({
+          map: map,
+          position: { lat: location.lat, lng: location.long },
+          title: location.name,
+        });
 
-      // Add Dummy marker for Northeastern University
-      new AdvancedMarkerElement({
-        map: map,
-        position: { lat: 42.3398, lng: -71.0892 },
-        title: 'Northeastern University',
-      });
+        // Clickable on Markers to navigate to booking page
+        marker.addListener('click', () => {
+          console.log('Clicked:', location.name);
+          // TODO: Navigate to booking page for this location
+          // You can add routing logic here later
+        });
+         });
 
-      // Add Dummy marker for Prudential Center
-      new AdvancedMarkerElement({
-        map: map,
-        position: { lat: 42.3467, lng: -71.0818 },
-        title: 'Prudential Center',
-      });
+   
     };
 
     initMap();
