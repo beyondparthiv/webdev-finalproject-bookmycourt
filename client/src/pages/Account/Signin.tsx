@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { Button, FormControl } from "react-bootstrap";
 import { setCurrentUser } from "./reducer";
 import * as client from "./client";
+import "./Account.css";
+import "../../index.css"
 
 
 export default function Signin() {
@@ -18,7 +20,7 @@ export default function Signin() {
    navigate("/profile");
  };
   return (
-    <div id="wd-signin-screen">
+    <div className="wd-signin-screen">
       <h1>Sign in</h1>
       <FormControl defaultValue={credentials.username}
              onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
