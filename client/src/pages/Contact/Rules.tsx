@@ -3,17 +3,16 @@ import { Link } from 'react-router-dom';
 export const Rules: React.FC = () => {
   return (
     <div>
-      <h2>How to Play Pickleball</h2>
-        <p>Pickleball is played with a paddle and a plastic ball with holes. Here are the basic rules:</p>
+      <h2>Court Rules</h2>
+        <p>We all love clean, safe courts! Please adhere to the following rules while using any of our courts:</p>
         <ul>
-          <li>The game can be played as singles or doubles.</li>
-          <li>The serve must be made underhand and diagonally cross-court.</li>
-          <li>Points can only be scored by the serving team.</li>
-          <li>The ball must bounce once on each side before volleys are allowed.</li>
-          <li>The non-volley zone (kitchen) is a 7-foot area on both sides of the net where volleys are not allowed.</li>
-          <li>Games are typically played to 11 points, and a team must win by 2 points.</li>
+          <li>Leave the court in better condition than you found it.</li>
+          <li>No food or drinks (except water) on the courts.</li>
+          <li>Wear appropriate court shoes to avoid damaging the surface.</li>
+          <li>Respect other players and stick to your booked timeslot.</li>
+          <li>Follow all posted signs and guidelines.</li>
         </ul>
-        <p>For more detailed rules, please refer to the official Pickleball <Link to="https://usapickleball.org/rules/">rulebook</Link>.</p>
+        <p>For additional questions or to report issues, please send us a message.</p>
     </div>
   );
 };
