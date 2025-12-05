@@ -7,7 +7,7 @@ import { Button, FormControl } from "react-bootstrap";
 import "../Account.css";
 import "../../../index.css"
 import OwnerBookings from "./OwnerBookings";
-import MyBookings from "./MyBookings";
+import MyBookings from "./MyBookings/MyBookings";
 import Users from "./Users";
 
 export default function Profile() {
@@ -93,8 +93,8 @@ export default function Profile() {
             <OwnerBookings />
           )}
           {currentUser && currentUser.role === "CUSTOMER" && (
-            //<Link to={`/mybookings`}>Customer</Link>
-            <MyBookings />
+            <h3>MyBookings</h3>
+            //<MyBookings />
           )}
           {currentUser && currentUser.role === "ADMIN" && (
             // show all users

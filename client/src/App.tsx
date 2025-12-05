@@ -10,7 +10,7 @@ import Signin from "./pages/Account/Signin";
 import Signup from "./pages/Account/Signup";
 import Profile from "./pages/Account/Profile/Profile";
 import TurfDetails from './pages/TurfDetails';
-import MyBookings from "./pages/Account/Profile/MyBookings";
+import MyBookings from "./pages/Account/Profile/MyBookings/MyBookings";
 import Users from "./pages/Account/Profile/Users";
 import OwnerBookings from "./pages/Account/Profile/OwnerBookings";
 
