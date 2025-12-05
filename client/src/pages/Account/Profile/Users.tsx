@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import * as client from "../client";
 import { FaPlus } from "react-icons/fa6";
 import PeopleTable from "./PeopleTable";
-import { IoChevronBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 export default function Users() {
     const navigate = useNavigate();
@@ -48,10 +47,7 @@ export default function Users() {
     }, []);
     return (
         <div id="wd-people-table">
-            <h1>
-                <IoChevronBack onClick={() => navigate('/profile')} />
-                    
-                Users</h1>
+            <h2>Users</h2>
             <button onClick={createUser}
                 className="float-end btn btn-danger">
                 <FaPlus className="me-2" />

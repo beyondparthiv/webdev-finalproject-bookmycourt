@@ -6,6 +6,9 @@ import { setCurrentUser } from "../reducer";
 import { Button, FormControl } from "react-bootstrap";
 import "../Account.css";
 import "../../../index.css"
+import OwnerBookings from "./OwnerBookings";
+import MyBookings from "./MyBookings";
+import Users from "./Users";
 
 export default function Profile() {
   const [profile, setProfile] = useState<any>({});
@@ -86,14 +89,17 @@ export default function Profile() {
           </Button>
           <br />
           {currentUser && currentUser.role === "COURTOWNER" && (
-            <Link to={`/ownerbookings`}>Court Owner</Link>)}
-
+            //<Link to={`/ownerbookings`}>Court Owner</Link>)}
+            <OwnerBookings />
+          )}
           {currentUser && currentUser.role === "CUSTOMER" && (
-            <Link to={`/mybookings`}>Customer</Link>
+            //<Link to={`/mybookings`}>Customer</Link>
+            <MyBookings />
           )}
           {currentUser && currentUser.role === "ADMIN" && (
             // show all users
-            <Link to={`/users`}>All Users</Link>
+            //<Link to={`/users`}>All Users</Link>
+            <Users />
           )}
 
         </div>

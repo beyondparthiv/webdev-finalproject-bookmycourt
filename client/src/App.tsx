@@ -29,9 +29,6 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/map" element={<Map />} />
         <Route path="/turf/:id" element={<TurfDetails />} />
-        <Route path="/mybookings" element={<MyBookings />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/ownerbookings" element={<OwnerBookings />} />
       </Routes>
     </Router>
   );

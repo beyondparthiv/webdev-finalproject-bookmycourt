@@ -2,13 +2,13 @@
 import { Table } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 import { useState } from "react";
+import "../Account.css";
 export default function PeopleTable({ users = [], fetchUsers }:
     { users?: any[]; fetchUsers: () => void }
 ) {
     const [showUserId, setShowUserId] = useState<string | null>(null);
-    console.log(users);
     return (
-        <div id="wd-people-table">
+        <div className="wd-people-table">
             <Table striped>
                 <thead>
                     <tr><th>Name</th><th>Role</th></tr>
