@@ -14,10 +14,6 @@ export const FAQ: React.FC = () => {
       answer: "Go to the homepage and click the 'Book My Court' button. You'll be able to see available time slots and make a reservation."
     },
     {
-      question: "What payment methods do you accept?",
-      answer: "We accept Visa, Mastercard, Apple Pay, and PayPal. PLEASE NOTE: This is a demo site; no actual payments are processed."
-    },
-    {
       question: "Can I cancel my booking?",
       answer: "Yes! You can cancel up to 24 hours before your booking time for a full refund."
     },
@@ -31,7 +27,7 @@ export const FAQ: React.FC = () => {
     },
     {
       question: "Do you provide equipment rentals?",
-      answer: "No, you are required to bring your own pickleball equipment."
+      answer: "No, you are required to bring your own equipment."
     },
   ];
 
