@@ -11,7 +11,7 @@ export default function AccountPage() {
    if (!currentUser) {
      navigate("/signin");
    } else {
-     navigate("/profile");
+     navigate("/profile/profile");
    }
  }, [currentUser, navigate]);
  
