@@ -37,7 +37,7 @@ export default function Profile() {
   }, [currentUser, navigate]);
   return (
     <div className="wd-profile-screen">
-      <h3>Profile</h3>
+      <h1>Profile</h1>
       {profile && (
         <div>
           <FormControl id="wd-username" className="mb-2"
@@ -73,9 +73,10 @@ export default function Profile() {
             onChange={(e) => setProfile({ ...profile, email: e.target.value })} />
           <br />
           <select className="form-control mb-2" id="wd-role"
+            value={profile.role}
             onChange={(e) => setProfile({ ...profile, role: e.target.value })} >
             <option value="COURTOWNER">Court Owner</option>
-            <option value="PLAYER">Player</option>
+            <option value="CUSTOMER">Customer</option>
             <option value="ADMIN">Admin</option>
           </select>
           <br />
@@ -84,7 +85,17 @@ export default function Profile() {
             Sign out
           </Button>
           <br />
-          <Link to={`/mybookings`}>My Bookings</Link>
+          {currentUser && currentUser.role === "COURTOWNER" && (
+            <Link to={`/ownerbookings`}>Court Owner</Link>)}
+
+          {currentUser && currentUser.role === "CUSTOMER" && (
+            <Link to={`/mybookings`}>Customer</Link>
+          )}
+          {currentUser && currentUser.role === "ADMIN" && (
+            // show all users
+            <Link to={`/users`}>All Users</Link>
+          )}
+
         </div>
       )}
     </div>
