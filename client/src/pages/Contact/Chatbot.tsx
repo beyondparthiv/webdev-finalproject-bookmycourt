@@ -13,7 +13,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ geminiService }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      content: 'Hi! I\'m Pickles! I\'m here to help you with booking courts, payment questions, or anything else. How can I assist you?',
+      content: 'Hi! I\'m Sporty! I\'m here to help you with booking courts or anything other questions. How can I assist you?',
       timestamp: new Date()
     }
   ]);
@@ -84,7 +84,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ geminiService }) => {
         {messages.map((message, index) => (
           <div key={index} style={{ marginBottom: '10px', textAlign: message.role === 'user' ? 'right' : 'left' }}>
             <div>
-              <strong>{message.role === 'user' ? 'You' : 'Pickles'}:</strong>
+              <strong>{message.role === 'user' ? 'You' : 'Sporty'}:</strong>
               <p style={{ margin: '5px 0' }}>{message.content}</p>
               <small>{message.timestamp.toLocaleTimeString()}</small>
             </div>
@@ -92,7 +92,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ geminiService }) => {
         ))}
         {isLoading && (
           <div style={{ marginBottom: '10px', textAlign: 'left' }}>
-            <em>Pickles is thinking...</em>
+            <em>Sporty is warming up...</em>
           </div>
         )}
         <div ref={messagesEndRef} />

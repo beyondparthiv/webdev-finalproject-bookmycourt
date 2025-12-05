@@ -31,7 +31,7 @@ const Map: React.FC = () => {
         marker.addListener('click', () => {
           console.log('Clicked:', location.name);
           // TODO: Navigate to booking page for this location
-          // You can add routing logic here later
+          // make modal window with different courts to select
         });
          });
 
