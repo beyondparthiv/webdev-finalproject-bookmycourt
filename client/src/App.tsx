@@ -10,7 +10,9 @@ import Signin from "./pages/Account/Signin";
 import Signup from "./pages/Account/Signup";
 import Profile from "./pages/Account/Profile/Profile";
 import TurfDetails from './pages/TurfDetails';
-import MyBookings from "./pages/Account/Profile/MyBookings";
+import MyBookings from "./pages/Account/Profile/MyBookings/MyBookings";
+import Users from "./pages/Account/Profile/Users";
+import OwnerBookings from "./pages/Account/Profile/OwnerBookings";
 
 function App() {
   return (
@@ -27,7 +29,6 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/map" element={<Map />} />
         <Route path="/turf/:id" element={<TurfDetails />} />
-        <Route path="/mybookings" element={<MyBookings />} />
       </Routes>
     </Router>
   );
