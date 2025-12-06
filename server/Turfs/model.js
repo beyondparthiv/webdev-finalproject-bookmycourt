@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-import schema from "./schema.js";
-const turfModel = mongoose.model(
-    "TurfModel",
-    schema
-);
-export default turfModel;
+import turfSchema from "./schema.js";
+
+const Turf = mongoose.model("Turf", turfSchema);
+
+export default Turf;
