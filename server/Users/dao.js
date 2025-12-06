@@ -1,36 +1,42 @@
 import { v4 as uuidv4 } from "uuid";
+import model from "./model.js";
 
-export default function UsersDao(db) {
-    let { users } = db;
+export function createUser(user) {
+  const newUser = { ...user, _id: uuidv4() };
+  return model.create(newUser);
+}
 
-    const createUser = (user) => {
-        const newUser = { ...user, _id: uuidv4() };
-        users = [...users, newUser];
-        return newUser;
-    };
-    const findAllUsers = () => users;
+export function findAllUsers() {
+  return model.find();
+}
 
-    const findUserById = (userId) =>
-        users.find((user) => user._id === userId);
+export function findUserById(userId) {
+  return model.findById(userId);
+}
 
-    const findUserByUsername = (username) =>
-        users.find((user) => user.username === username);
+export function findUserByUsername(username) {
+  return model.findOne({ username });
+}
 
-    const findUserByCredentials = (username, password) =>
-        users.find((user) =>
-            user.username === username &&
-            user.password === password);
+export function findUserByCredentials(username, password) {
+  return model.findOne({ username, password });
+}
 
-    const updateUser = (userId, user) =>
-    (users = users.map((u) =>
-        (u._id === userId ? user : u)));
+export function updateUser(userId, userUpdates) {
+  return model.updateOne({ _id: userId }, { $set: userUpdates });
+}
 
-    const deleteUser = (userId) =>
-        (users = users.filter((u) => u._id !== userId));
+export function deleteUser(userId) {
+  return model.findByIdAndDelete(userId);
+}
 
-    return {
-        createUser, findAllUsers, findUserById,
-        findUserByUsername, findUserByCredentials,
-        updateUser, deleteUser
-    };
+export function findUsersByRole(role) {
+  return model.find({ role });
+}
+
+export function findUsersByPartialName(partialName) {
+  const regex = new RegExp(partialName, "i");
+  return model.find({
+    $or: [{ firstName: { $regex: regex } }, { lastName: { $regex: regex } }],
+  });
 }

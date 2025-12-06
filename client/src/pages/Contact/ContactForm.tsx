@@ -31,7 +31,7 @@ export const ContactForm: React.FC = () => {
           marginBottom: '20px',
           borderRadius: '5px'
         }}>
-          <strong>Message sent!</strong> We will respond soon. In the meantime, check out our FAQs or ask Pickles for additional help!
+          <strong>Message sent!</strong> We will respond soon. In the meantime, check out our FAQs or ask Sporty for additional help!
         </div>
       )}
 
