@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   FaArrowLeft,
   FaStar,
@@ -19,77 +19,105 @@ import "./TurfDetails.css";
 const TurfDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [turf, setTurf] = useState<TurfDetailsType | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [booking, setBooking] = useState(false);
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
+  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
+    setSelectedDate(today);
     fetchTurfDetails();
-    generateDates();
   }, [id]);
 
-  const generateDates = () => {
-    const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0];
-    setSelectedDate(formattedDate);
-  };
+  useEffect(() => {
+    if (turf && selectedDate) {
+      fetchBookedSlots();
+    }
+  }, [selectedDate, turf]);
 
   const fetchTurfDetails = async () => {
-    try {
-      const response = await fetch(`/api/turfs/${id}`);
-      const data = await response.json();
-      setTurf(data);
-      setIsFavorite(data.isFavorite);
-      setTimeSlots(generateTimeSlots(data.pricePerHour));
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching turf details:', error);
-      loadMockData();
-    }
-  };
-
-  const loadMockData = () => {
     if (!id) {
       setLoading(false);
       return;
     }
 
-    const foundTurf = getTurfById(id);
+    try {
+      const data = await turfService.getById(id);
+      setTurf(data);
+      setIsFavorite(data.isFavorite);
+    } catch (err) {
+      console.error("Error fetching turf details:", err);
+      loadMockData();
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  const fetchBookedSlots = async () => {
+    if (!id || !selectedDate) return;
+
+    try {
+      const slots = await turfService.getBookedSlots(id, selectedDate);
+      setBookedSlots(slots);
+      if (turf) {
+        generateTimeSlots(turf.pricePerHour, slots);
+      }
+    } catch (err) {
+      console.error("Error fetching booked slots:", err);
+      // Generate slots without booked info
+      if (turf) {
+        generateTimeSlots(turf.pricePerHour, []);
+      }
+    }
+  };
+
+  const loadMockData = () => {
+    if (!id) return;
+
+    const foundTurf = getTurfById(id);
     if (foundTurf) {
       setTurf(foundTurf);
       setIsFavorite(foundTurf.isFavorite);
-      setTimeSlots(generateTimeSlots(foundTurf.pricePerHour));
+      generateTimeSlots(foundTurf.pricePerHour, []);
     }
-
-    setLoading(false);
   };
 
-  const generateTimeSlots = (basePrice: number): TimeSlot[] => {
+  const generateTimeSlots = (
+    basePrice: number,
+    bookedTimes: string[]
+  ): void => {
     const slots: TimeSlot[] = [];
     const startHour = 6;
     const endHour = 22;
 
     for (let hour = startHour; hour < endHour; hour++) {
-      const timeString = `${hour.toString().padStart(2, '0')}:00`;
-      const endTimeString = `${(hour + 1).toString().padStart(2, '0')}:00`;
+      const timeString = `${hour.toString().padStart(2, "0")}:00`;
+      const endTimeString = `${(hour + 1).toString().padStart(2, "0")}:00`;
 
       // Peak hours (6-9 PM) have higher prices
       const isPeakHour = hour >= 18 && hour < 21;
       const price = isPeakHour ? basePrice + 3 : basePrice;
 
+      // Check if this slot is booked
+      const isBooked = bookedTimes.includes(timeString);
+
       slots.push({
         id: `slot-${hour}`,
         time: `${timeString} - ${endTimeString}`,
-        isAvailable: Math.random() > 0.3,
+        isAvailable: !isBooked,
         price: price,
       });
     }
-    return slots;
+
+    setTimeSlots(slots);
   };
 
   const getNextDays = (): { date: string; display: string; day: string }[] => {
@@ -97,8 +125,8 @@ const TurfDetails: React.FC = () => {
     for (let i = 0; i < 7; i++) {
       const date = new Date();
       date.setDate(date.getDate() + i);
-      const dateStr = date.toISOString().split('T')[0];
-      const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+      const dateStr = date.toISOString().split("T")[0];
+      const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
       const dayNum = date.getDate().toString();
       days.push({ date: dateStr, display: dayNum, day: dayName });
     }
@@ -108,10 +136,6 @@ const TurfDetails: React.FC = () => {
   const handleDateSelect = (date: string) => {
     setSelectedDate(date);
     setSelectedSlot(null);
-    // Regenerate slots for the new date (availability may differ)
-    if (turf) {
-      setTimeSlots(generateTimeSlots(turf.pricePerHour));
-    }
   };
 
   const handleSlotSelect = (slot: TimeSlot) => {
@@ -163,6 +187,7 @@ const TurfDetails: React.FC = () => {
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
+    // TODO: Save to backend/user preferences
   };
 
   const handleBack = () => {
@@ -186,7 +211,6 @@ const TurfDetails: React.FC = () => {
   }
 
   return (
-    <>
     <div className="turf-details-container">
       {/* Header Image */}
       <div className="turf-image-header">
@@ -222,7 +246,9 @@ const TurfDetails: React.FC = () => {
 
         <div className="turf-distance-price">
           <span className="distance-info">{turf.distance} km away</span>
-          <span className="base-price">Starting at ${turf.pricePerHour}/hr</span>
+          <span className="base-price">
+            Starting at ${turf.pricePerHour}/hr
+          </span>
         </div>
 
         {turf.description && (
@@ -250,7 +276,7 @@ const TurfDetails: React.FC = () => {
           {getNextDays().map((day) => (
             <div
               key={day.date}
-              className={`date-item ${selectedDate === day.date ? 'selected' : ''}`}
+              className={`date-item ${selectedDate === day.date ? "selected" : ""}`}
               onClick={() => handleDateSelect(day.date)}
             >
               <span className="day-name">{day.day}</span>
@@ -267,8 +293,8 @@ const TurfDetails: React.FC = () => {
           {timeSlots.map((slot) => (
             <div
               key={slot.id}
-              className={`slot-item ${!slot.isAvailable ? 'unavailable' : ''} ${
-                selectedSlot?.id === slot.id ? 'selected' : ''
+              className={`slot-item ${!slot.isAvailable ? "unavailable" : ""} ${
+                selectedSlot?.id === slot.id ? "selected" : ""
               }`}
               onClick={() => handleSlotSelect(slot)}
             >
@@ -278,6 +304,9 @@ const TurfDetails: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* Error Message */}
+      {error && <div className="error-message">{error}</div>}
 
       {/* Pricing Summary */}
       {selectedSlot && (
@@ -304,17 +333,21 @@ const TurfDetails: React.FC = () => {
       {/* Book Now Button */}
       <div className="book-section">
         <button
-          className={`book-now-btn ${!selectedSlot ? 'disabled' : ''}`}
+          className={`book-now-btn ${!selectedSlot || booking ? "disabled" : ""}`}
           onClick={handleBookNow}
-          disabled={!selectedSlot}
+          disabled={!selectedSlot || booking}
         >
-          {selectedSlot
-            ? `Book Now - $${selectedSlot.price}`
-            : 'Select a Time Slot'}
+          {booking
+            ? "Booking..."
+            : selectedSlot
+              ? `Book Now - $${selectedSlot.price}`
+              : "Select a Time Slot"}
         </button>
+        {!user && selectedSlot && (
+          <p className="login-hint">You'll need to sign in to complete booking</p>
+        )}
       </div>
     </div>
-    </>
   );
 };
 

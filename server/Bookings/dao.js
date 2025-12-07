@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import model from "./model.js";
 
 export async function findAllBookings() {
@@ -74,3 +75,12 @@ export async function isSlotAvailable(turfId, bookingDate, bookingTime) {
   return !existing;
 }
 
+// Get booked slots for a turf on a specific date
+export async function getBookedSlots(turfId, bookingDate) {
+  const bookings = await model.find({
+    turf: turfId,
+    bookingDate,
+    status: { $ne: "cancelled" },
+  });
+  return bookings.map((b) => b.bookingTime);
+}
