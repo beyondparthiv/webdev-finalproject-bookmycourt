@@ -6,19 +6,20 @@ import {
   FaHeart,
   FaRegHeart,
   FaMapMarkerAlt,
-} from 'react-icons/fa';
-import type { TurfDetails as TurfDetailsType, TimeSlot } from '../types/turf.types';
-import { getTurfById } from '../data/mockTurfs';
-import './TurfDetails.css';
-import { bookTurf } from './client';
-import { useSelector } from 'react-redux';
+} from "react-icons/fa";
+import type {
+  TurfDetails as TurfDetailsType,
+  TimeSlot,
+} from "../types/turf.types";
+import { turfService, bookingService } from "../services/api";
+import { useAuth } from "../context/AuthContext";
+import { getTurfById } from "../data/mockTurfs";
+import "./TurfDetails.css";
 
 const TurfDetails: React.FC = () => {
-   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
-
 
   const [turf, setTurf] = useState<TurfDetailsType | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>("");
@@ -143,10 +144,44 @@ const TurfDetails: React.FC = () => {
     }
   };
 
-  const handleBookNow = () => {
-    if (selectedSlot && turf) {
-      bookTurf(currentUser?._id, turf.id, selectedDate, selectedSlot.time);
-      alert(`✅ Booking confirmed for ${turf.name} on ${selectedDate} (${selectedSlot.time})`);
+  const handleBookNow = async () => {
+    if (!selectedSlot || !turf || !id) return;
+
+    // Check if user is logged in
+    if (!user) {
+      navigate("/signin", {
+        state: { from: `/turf/${id}` },
+      });
+      return;
+    }
+
+    setBooking(true);
+    setError(null);
+
+    try {
+      // Extract start time from slot (e.g., "10:00 - 11:00" -> "10:00")
+      const bookingTime = selectedSlot.time.split(" - ")[0];
+
+      await bookingService.create(id, {
+        bookingDate: selectedDate,
+        bookingTime: bookingTime,
+        duration: 1,
+        totalPrice: selectedSlot.price,
+      });
+
+      // Navigate to confirmation or my bookings
+      navigate("/my-bookings", {
+        state: {
+          success: true,
+          message: `Successfully booked ${turf.name} for ${selectedDate} at ${selectedSlot.time}`,
+        },
+      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      console.error("Booking error:", err);
+      setError(err.message || "Failed to book. Please try again.");
+    } finally {
+      setBooking(false);
     }
   };
 

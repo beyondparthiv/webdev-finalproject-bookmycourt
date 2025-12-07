@@ -1,13 +1,14 @@
 import * as turfDao from "./dao.js";
 
-export default function TurfRoutes(app, db) {
-    const dao = TurfsDao(db);
-    const bookingsDao = BookingsDao(db);
-
-    const findAllTurfs = async (req, res) => {
-        const turfs = await dao.findAllTurfs();
-        res.send(turfs);
-
+export default function TurfRoutes(app) {
+  // Get all turfs
+  app.get("/api/turfs", async (req, res) => {
+    try {
+      const turfs = await turfDao.findAllTurfs();
+      res.json(turfs);
+    } catch (error) {
+      console.error("Error fetching turfs:", error);
+      res.status(500).json({ error: "Failed to fetch turfs" });
     }
   });
 
@@ -37,44 +38,17 @@ export default function TurfRoutes(app, db) {
     }
   });
 
-    const bookTurf = async (req, res) => {
-        let { uid, tid } = req.params;
-        if (uid === "current") {
-            const currentUser = req.session["currentUser"];
-            uid = currentUser._id;
-        }
-        const status = await bookingsDao
-            .bookTurf(uid, tid);
-        res.send(status);
-    };
-
-    const deleteBookingForUser = async (req, res) => {
-        let { uid, tid } = req.params;
-        if (uid === "current") {
-            const currentUser = req.session["currentUser"];
-            uid = currentUser._id;
-        }
-        const status = await bookingsDao
-            .deleteBookingForUser(uid, tid);
-        res.send(status);
-    };
-
-    app.get("/api/turfs", findAllTurfs);
-    app.get("/api/users/:userId/turfs", findTurfsForUser);
-    app.post("/api/users/current/turfs", createTurf);
-    app.delete("/api/turfs/:turfId",
-        deleteTurf);
-    app.put("/api/turfs/:turfId",
-        updateTurf);
-    app.post("/api/users/:uid/turfs/:tid",
-        bookTurf);
-    app.delete("/api/users/:uid/turfs/:cid",
-        deleteBookingForUser);
-
-
-
-
-
+  // Update turf
+  app.put("/api/turfs/:turfId", async (req, res) => {
+    try {
+      const { turfId } = req.params;
+      const result = await turfDao.updateTurf(turfId, req.body);
+      res.json(result);
+    } catch (error) {
+      console.error("Error updating turf:", error);
+      res.status(500).json({ error: "Failed to update turf" });
+    }
+  });
 
   // Delete turf
   app.delete("/api/turfs/:turfId", async (req, res) => {

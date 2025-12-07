@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import type { Turf } from "../types/turf.types";
 import { turfService } from "../services/api";
 import { getAllTurfs } from "../data/mockTurfs";
-import * as client from "./client";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -61,8 +60,7 @@ const Home: React.FC = () => {
     setError(null);
 
     try {
-      const data = await client.fetchAllTurfs();
-      console.log("Fetched turfs:", data);
+      const data = await turfService.getAll();
       setTurfs(data);
       setFilteredTurfs(data);
       // Featured turfs: highest rated
@@ -220,11 +218,6 @@ const Home: React.FC = () => {
               </div>
             )}
           </div>
-        </div>
-        <div className="footer">
-          <p>Created by Bridget Leary (SEC 05), Isabel Cuddihy (SEC 05), Ankita Das (SEC 05), and Parthiv Dharmendra Modi (?)</p>
-          <p>Client repository: _____</p>
-          <p>Server repository: _____</p>
         </div>
       </div>
     </>
