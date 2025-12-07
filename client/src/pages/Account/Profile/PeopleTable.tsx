@@ -8,31 +8,27 @@ export default function PeopleTable({ users = [], fetchUsers }:
 ) {
     const [showUserId, setShowUserId] = useState<string | null>(null);
     return (
-        <div className="wd-people-table">
+        <div className="mx-auto" style={{ display: 'inline-block' }}>
             <Table striped>
                 <thead>
                     <tr><th>Name</th><th>Role</th></tr>
                 </thead>
                 <tbody>
-                    {
-                    users
-                        .map((user: any) => (
-                            <tr key={user._id}>
-                                <td className="wd-full-name text-nowrap">
-                                    <span className="text-decoration-none"
-                                        onClick={() => {
-                                            setShowUserId(user._id);
-                                        }} >
-                                        <FaUserCircle className="me-2 fs-1 text-secondary" />
-                                        <span>{user.firstName} </span>
-                                        <span>{user.lastName}</span>
-                                    </span>
-                                </td>
-                                <td className="wd-role">{user.role}</td>
-                            </tr>
-                        ))}
+                    {users.map((user: any) => (
+                        <tr key={user._id}>
+                            <td className="wd-full-name text-nowrap">
+                                <span className="text-decoration-none"
+                                    onClick={() => setShowUserId(user._id)}>
+                                    <FaUserCircle className="me-2 fs-1 text-secondary" />
+                                    <span>{user.firstName} </span>
+                                    <span>{user.lastName}</span>
+                                </span>
+                            </td>
+                            <td className="wd-role">{user.role}</td>
+                        </tr>
+                    ))}
                 </tbody>
-
             </Table>
-        </div>);
+        </div>
+    );
 }

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 
 export default function AccountPage() {
- const { currentUser } = useSelector((state: any) => state.account);
+ const { currentUser } = useSelector((state: any) => state.accountReducer);
  const navigate = useNavigate();
  
  useEffect(() => {

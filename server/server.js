@@ -5,17 +5,16 @@ import session from "express-session";
 
 import connectDB from "./Database/index.js";
 import UserRoutes from "./Users/routes.js";
+import cors from "cors"
+import mongoose from "mongoose";
 import TurfRoutes from "./Turfs/routes.js";
 import BookingRoutes from "./Bookings/routes.js";
-import LocationRoutes from "./Locations/routes.js";
-
-// Connect to MongoDB
-connectDB();
-
 const app = express();
 
-app.use(
-  cors({
+const CONNECTION_STRING = process.env.MONGODB_URI;
+mongoose.connect(CONNECTION_STRING);
+
+app.use(cors({
     credentials: true,
     origin: process.env.CLIENT_URL || "http://localhost:3000",
   })
@@ -44,11 +43,9 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "BookMyCourt API running" });
 });
 
-// Routes
-UserRoutes(app);
-TurfRoutes(app);
-BookingRoutes(app);
-LocationRoutes(app);
+UserRoutes(app, db);
+TurfRoutes(app, db);
+BookingRoutes(app, db);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
