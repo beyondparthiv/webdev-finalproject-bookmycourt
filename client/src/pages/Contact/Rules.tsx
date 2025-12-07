@@ -5,7 +5,7 @@ export const Rules: React.FC = () => {
     <div>
       <h2>Court Rules</h2>
         <p>We all love clean, safe courts! Please adhere to the following rules while using any of our courts:</p>
-        <ul>
+        <ul className="rules-list">
           <li>Leave the court in better condition than you found it.</li>
           <li>No food or drinks (except water) on the courts.</li>
           <li>Wear appropriate court shoes to avoid damaging the surface.</li>
