@@ -21,7 +21,7 @@ const Map: React.FC = () => {
     const fetchLocations = async () => {
       try {
         const response = await fetch("/api/locations");
-        
+       
         if (!response.ok) {
           throw new Error(`Error status: ${response.status}`);
         }
@@ -65,22 +65,24 @@ const Map: React.FC = () => {
         
         let turfsHTML = '';
         if (turfs && turfs.length > 0) {
+          //Generate turf buttons HTML -> overall strucutre for individual turf/court
           turfsHTML = turfs.map((turf) => `
             <button 
-              id="court-btn-${turf._id}" 
-              class="info-window-court-btn"
+              id="court-button-${turf._id}" 
+              class="info-window-court-button"
             >
-              <div class="court-btn-info">
-                <div class="court-btn-name">${turf.name}</div>
-                ${turf.rating ? `<div class="court-btn-rating">⭐ ${turf.rating}</div>` : ''}
+              <div class="court-button-info">
+                <div class="court-button-name">${turf.name}</div>
+                ${turf.rating ? `<div class="court-button-rating">⭐ ${turf.rating}</div>` : ''}
               </div>
-              <div class="court-btn-price">$${turf.pricePerHour}/hr</div>
+              <div class="court-button-price">$${turf.pricePerHour}/hr</div>
             </button>
           `).join('');
         } else {
           turfsHTML = '<p class="no-courts">No courts available at this location</p>';
         }
 
+        // Set inner HTML of the info window, location details and available court buttons
         div.innerHTML = `
           <div class="info-window-header">
             <h3>${location.name}</h3>
@@ -130,10 +132,10 @@ const Map: React.FC = () => {
           // Filter out any failed requests
           const validTurfs = turfDetails.filter(turf => turf !== null);
 
-          // Create info window content
+          // Create info window content with turf details
           const content = createInfoWindowContent(location, validTurfs);
           
-          // Create Window
+          // Create Window and open it on the map
           const { InfoWindow } = await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
           const infoWindow = new InfoWindow();
           
@@ -142,7 +144,7 @@ const Map: React.FC = () => {
 
           setTimeout(() => {
             validTurfs.forEach((turf) => {
-              const button = document.getElementById(`court-btn-${turf._id}`);
+              const button = document.getElementById(`court-button-${turf._id}`);
               if (button) {
                 button.addEventListener('click', () => {
                   window.location.href = `/turf/${turf._id}`;

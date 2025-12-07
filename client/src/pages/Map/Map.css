@@ -13,7 +13,6 @@
 }
 
 .map-header h1 {
-  font-family: 'Poppins', 'Roboto', sans-serif;
   font-size: 32px;
   font-weight: 600;
   color: #333;
@@ -21,7 +20,6 @@
 }
 
 .map-header p {
-  font-family: 'Poppins', 'Roboto', sans-serif;
   font-size: 16px;
   color: #666;
   margin: 0;
@@ -33,7 +31,6 @@
   margin: 0 auto;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .map-container {
@@ -49,9 +46,8 @@
   align-items: center;
   height: 600px;
   background-color: #f5f5f5;
-  font-family: 'Poppins', 'Roboto', sans-serif;
   font-size: 18px;
-  color: #666;
+  color: #000000;
 }
 
 
@@ -60,19 +56,18 @@
   padding: 8px;
   min-width: 250px;
   max-width: 320px;
-  font-family: 'Poppins', 'Roboto', sans-serif;
 }
 
 .info-window-header h3 {
   font-size: 18px;
   font-weight: 600;
-  color: #333;
+  color: #000000;
   margin: 0 0 8px 0;
 }
 
 .info-window-address {
   font-size: 13px;
-  color: #666;
+  color: #000000;
   margin: 0 0 16px 0;
   display: flex;
   align-items: center;
@@ -87,7 +82,7 @@
 .courts-label {
   font-size: 14px;
   font-weight: 500;
-  color: #333;
+  color: #000000;
   margin: 0 0 12px 0;
 }
 
@@ -97,34 +92,26 @@
   gap: 8px;
 }
 
-.info-window-court-btn {
+.info-window-court-button {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
   background-color: #f9f9f9;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s;
-  font-family: 'Poppins', 'Roboto', sans-serif;
   width: 100%;
   text-align: left;
 }
 
-.info-window-court-btn:hover {
-  background-color: #e8f5e9;
-  border-color: #4caf50;
-  transform: translateX(4px);
-}
 
-.court-btn-name {
+.court-button-name {
   font-size: 14px;
   font-weight: 500;
-  color: #333;
+  color: #000000;
 }
 
-.court-btn-price {
+.court-button-price {
   font-size: 14px;
   font-weight: 600;
   color: #4caf50;
@@ -132,76 +119,8 @@
 
 .no-courts {
   font-size: 14px;
-  color: #999;
+  color: #000000;
   text-align: center;
   padding: 12px;
   font-style: italic;
-}
-
-/* Override default Google Maps InfoWindow styles */
-.gm-style .gm-style-iw-c {
-  padding: 12px !important;
-  border-radius: 12px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-}
-
-.gm-style .gm-style-iw-d {
-  overflow: auto !important;
-  max-height: 400px !important;
-}
-
-.gm-style-iw-tc::after {
-  background: white !important;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .map-page-container {
-    padding: 16px;
-  }
-
-  .map-header h1 {
-    font-size: 24px;
-  }
-
-  .map-header p {
-    font-size: 14px;
-  }
-
-  .map-container {
-    height: 400px;
-  }
-
-  .map-wrapper {
-    border-radius: 12px;
-  }
-
-  .legend-items {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .info-window-content {
-    min-width: 200px;
-    max-width: 280px;
-  }
-}
-
-@media (max-width: 480px) {
-  .map-container {
-    height: 350px;
-  }
-
-  .map-header h1 {
-    font-size: 20px;
-  }
-
-  .info-window-content {
-    min-width: 180px;
-    max-width: 240px;
-  }
-
-  .info-window-court-btn {
-    padding: 10px 12px;
-  }
 }
