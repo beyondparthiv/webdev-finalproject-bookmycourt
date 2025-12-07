@@ -6,8 +6,9 @@ export default function TurfRoutes(app, db) {
     const bookingsDao = BookingsDao(db);
 
     const findAllTurfs = async (req, res) => {
-        const courses = await dao.findAllTurfs();
-        res.send(courses);
+        const turfs = await dao.findAllTurfs();
+        res.send(turfs);
+
     }
     const findTurfsForUser = async (req, res) => {
         let { userId } = req.params;
@@ -72,7 +73,7 @@ export default function TurfRoutes(app, db) {
     };
 
     app.get("/api/turfs", findAllTurfs);
-    app.get("/api/users/:userId/courses", findTurfsForUser);
+    app.get("/api/users/:userId/turfs", findTurfsForUser);
     app.post("/api/users/current/turfs", createTurf);
     app.delete("/api/turfs/:turfId",
         deleteTurf);

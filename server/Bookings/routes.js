@@ -1,6 +1,6 @@
-import EnrollmentsDao from './dao.js';
+import BookingsDao from './dao.js';
 
-export default function BookingRoute(app, db) {
+export default function BookingRoutes(app, db) {
     const dao = BookingsDao(db);
 
     const bookTurf = (req, res) => {
@@ -17,19 +17,23 @@ export default function BookingRoute(app, db) {
     }
 
     const fetchBookings = async (req, res) => {
-        let { userId } = req.params;
-        if (userId === "current") {
-            const currentUser = req.session["currentUser"];
-            if (!currentUser) {
-                res.sendStatus(401);
-                return;
-            }
-            userId = currentUser._id;
-        }
-        const bookings = await dao.fetchBookings(userId);
+        const bookings = await dao.findAllBookings();
+        //console.log("Bookings fetched: ", bookings);
         res.json(bookings);
+        // console.log("fetch bookings called");
+        // let { userId } = req.params;
+        // if (userId === "current") {
+        //     const currentUser = req.session["currentUser"];
+        //     if (!currentUser) {
+        //         res.sendStatus(401);
+        //         return;
+        //     }
+        //     userId = currentUser._id;
+        // }
+        // const bookings = await dao.findTurfsForUser(userId);
+        // res.json(bookings);
     };
-
+ 
     app.post("/api/turfs/:turfId/bookings", bookTurf);
     app.delete("/api/turfs/:turfId/bookings/:userId", deleteBookingForUser);
     app.get("/api/users/:userId/bookings", fetchBookings);

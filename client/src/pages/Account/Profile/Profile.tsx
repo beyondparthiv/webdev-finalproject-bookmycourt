@@ -14,7 +14,7 @@ export default function Profile() {
   const [profile, setProfile] = useState<any>({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { currentUser } = useSelector((state: any) => state.account);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const fetchProfile = () => {
     if (!currentUser) {
@@ -89,18 +89,14 @@ export default function Profile() {
           </Button>
           <br />
           {currentUser && currentUser.role === "COURTOWNER" && (
-            //<Link to={`/ownerbookings`}>Court Owner</Link>)}
             <OwnerBookings />
           )}
           {currentUser && currentUser.role === "CUSTOMER" && (
-            <h3>MyBookings</h3>
-            //<MyBookings />
+            <MyBookings />
           )}
           {currentUser && currentUser.role === "ADMIN" && (
-            // show all users
-            //<Link to={`/users`}>All Users</Link>
             <Users />
-          )}
+          )} 
 
         </div>
       )}

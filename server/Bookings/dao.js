@@ -2,7 +2,7 @@ import model from "./model.js";
 export default function BookingsDao(db) {
 
   async function findAllBookings() {
-    return model.find({});
+    return await model.find({}).populate("turf").populate("user");
   }
 
   async function findTurfsForUser(userId) {

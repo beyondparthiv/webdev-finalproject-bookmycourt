@@ -1,9 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import model from "./model.js";
-export default function CoursesDao(db) {
+export default function TurfsDao(db) {
 
     function findAllTurfs() {
-        // return db.courses;
         return model.find(
             {},
             { name: 1, description: 1}
