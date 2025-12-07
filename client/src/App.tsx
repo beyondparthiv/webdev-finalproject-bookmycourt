@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Booking from "./pages/Booking";
 import { Contact } from "./pages/Contact/Contact";
 import Account from "./pages/Account/Account";
-import Map from "./pages/Map";
+import Map from "./pages/Map/Map";
 import "./index.css";
 import Signin from "./pages/Account/Signin";
 import Signup from "./pages/Account/Signup";
