@@ -55,9 +55,8 @@ const Home: React.FC = () => {
 
   const fetchTurfs = async () => {
     try {
-      const response = await client.fetchAllTurfs();
-      console.log("Fetched turfs:", response);
-      const data = await response.json();
+      const data = await client.fetchAllTurfs();
+      console.log("Fetched turfs:", data);
       setTurfs(data);
       setFilteredTurfs(data);
       setFeaturedTurfs(data.slice(0, 4));

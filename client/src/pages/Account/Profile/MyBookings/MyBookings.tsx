@@ -13,7 +13,8 @@ export default function MyBookings() {
     const { bookings } = useSelector((state: any) => state.bookingsReducer);
 
     function isBooked(turfId: string, userId: string) {
-        const ibooked = bookings.some((booking: { user: { _id: string }; turf: { _id: string } }) =>
+        const ibooked = bookings.some((booking: any) =>
+            booking.user && booking.turf &&
             booking.user._id === userId &&
             booking.turf._id === turfId);
         console.log("isBooked check:", { turfId, userId, ibooked });
@@ -21,7 +22,8 @@ export default function MyBookings() {
     }
 
     function findDateTime(turfId: string, userId: string) {
-        const booking = bookings.find((booking: { user: { _id: string }; turf: { _id: string }; bookingDate: string; bookingTime: string }) =>
+        const booking = bookings.find((booking: any) =>
+            booking.user && booking.turf &&
             booking.user._id === userId &&
             booking.turf._id === turfId);
         return booking ? `${booking.bookingDate} at ${booking.bookingTime}` : "N/A";
@@ -38,7 +40,7 @@ export default function MyBookings() {
     const fetchBookings = async () => {
         try {
             if (currentUser?._id) {
-                const bookings = await client.fetchAllBookings(currentUser._id);
+                const bookings = await client.fetchAllUserBookings(currentUser._id);
                 console.log("Fetched bookings:", bookings);
                 dispatch(setBookings(bookings));
             } else {

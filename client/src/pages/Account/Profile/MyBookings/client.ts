@@ -16,3 +16,9 @@ export const fetchAllBookings = async (userId: string) => {
     `${HTTP_SERVER}/api/users/${userId}/bookings`);
   return response.data;
 } 
+
+export const fetchAllUserBookings = async (userId: string) => {
+  const response = await axiosWithCredentials.get(
+    `${HTTP_SERVER}/api/users/${userId}/bookings`);
+  return response.data;
+} 

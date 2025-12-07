@@ -3,9 +3,11 @@ import model from "./model.js";
 export default function TurfsDao(db) {
 
     function findAllTurfs() {
-        return model.find(
-            {},
-            { name: 1, description: 1}
+        return model.find({}).then(turfs => 
+            turfs.map(turf => ({
+                ...turf.toObject(),
+                id: turf._id
+            }))
         );
     }
 
