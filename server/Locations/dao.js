@@ -10,6 +10,9 @@ export function findAllLocations() {
   return model.find();
 }
 
+export function findAllCourtsAtLocation(locationId) {
+  return model.findById(locationId).then(location => location ? location.courts : []);
+}
 export function findLocationById(locationId) {
   return model.findById(locationId);
 }

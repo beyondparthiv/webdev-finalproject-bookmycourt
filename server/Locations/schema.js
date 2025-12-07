@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import turfSchema from "../Turfs/schema.js";
 
 const locationSchema = new mongoose.Schema(
   {
@@ -10,6 +11,7 @@ const locationSchema = new mongoose.Schema(
     zipCode: String,
     latitude: Number,
     longitude: Number,
+    courts: [String],
   },
   { collection: "locations" }
 );
