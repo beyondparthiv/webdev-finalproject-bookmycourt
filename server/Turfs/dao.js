@@ -21,28 +21,23 @@ export default function TurfsDao(db) {
         return bookedTurfs;
     }
 
-    function createTurf(turf) {
-        const newTurf = { ...turf, _id: uuidv4() };
-        console.log("New turf: ", newTurf);
-        return model.create(newTurf);
-    }
+export function findTurfById(turfId) {
+  return model.findById(turfId);
+}
 
-    function deleteTurf(turfId) {
-        return model.deleteOne({ _id: turfId });
-    }
+export function createTurf(turf) {
+  const newTurf = { ...turf, _id: turf._id || uuidv4() };
+  return model.create(newTurf);
+}
 
-    function updateTurf(turfId, turfUpdates) {
-        return model.updateOne(
-            { _id: turfId },
-            { $set: turfUpdates }
-        )
-    }
+export function deleteTurf(turfId) {
+  return model.deleteOne({ _id: turfId });
+}
 
-    return {
-        findAllTurfs,
-        findTurfsForUser,
-        createTurf,
-        deleteTurf,
-        updateTurf
-    };
+export function updateTurf(turfId, turfUpdates) {
+  return model.updateOne({ _id: turfId }, { $set: turfUpdates });
+}
+
+export function findTurfsByIds(turfIds) {
+  return model.find({ _id: { $in: turfIds } });
 }

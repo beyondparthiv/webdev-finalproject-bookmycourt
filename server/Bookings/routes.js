@@ -10,12 +10,19 @@ export default function BookingRoutes(app, db) {
         const newBooking = await dao.bookTurf(userId, turfId, time, date);
         res.send(newBooking);
     }
+  });
 
     const deleteBookingForUser =  async (req, res) => {
         const { turfId, userId } = req.params;
         const status = await dao.deleteBookingForUser(userId, turfId);
         res.send(status);
     }
+  });
+
+  // Get bookings for current user
+  app.get("/api/users/:userId/bookings", async (req, res) => {
+    try {
+      let { userId } = req.params;
 
     const fetchBookings = async (req, res) => {
         const bookings = await dao.findAllBookings();

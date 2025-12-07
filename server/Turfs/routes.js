@@ -1,5 +1,4 @@
-import TurfsDao from "./dao.js";
-import BookingsDao from "../Bookings/dao.js";
+import * as turfDao from "./dao.js";
 
 export default function TurfRoutes(app, db) {
     const dao = TurfsDao(db);
@@ -10,45 +9,33 @@ export default function TurfRoutes(app, db) {
         res.send(turfs);
 
     }
-    const findTurfsForUser = async (req, res) => {
-        let { userId } = req.params;
-        if (userId === "current") {
-            const currentUser = req.session["currentUser"];
-            if (!currentUser) {
-                res.sendStatus(401);
-                return;
-            }
-            userId = currentUser._id;
-        }
-        const turfs = await bookingsDao.findTurfsForUser(userId);
-        res.json(turfs);
-    };
+  });
 
-    const createTurf= async (req, res) => {
-        const currentUser = req.session["currentUser"];
-        const newCourse = await dao.createTurf(req.body);
-        const booking = await bookingsDao.bookTurf(
-            currentUser._id,
-            newCourse._id,
-            Date.now()
-        );
-        res.json({course : newCourse, booking: booking});
-    };
-
-    const deleteTurf = async (req, res) => {
-        const { turfId } = req.params;
-        await bookingsDao.deleteAllBookingsForTurf(courseId);
-        const status = await dao.deleteTurf(turfId);
-        res.send(status);
+  // Get turf by ID
+  app.get("/api/turfs/:turfId", async (req, res) => {
+    try {
+      const { turfId } = req.params;
+      const turf = await turfDao.findTurfById(turfId);
+      if (!turf) {
+        return res.status(404).json({ error: "Turf not found" });
+      }
+      res.json(turf);
+    } catch (error) {
+      console.error("Error fetching turf:", error);
+      res.status(500).json({ error: "Failed to fetch turf" });
     }
+  });
 
-    const updateTurf = async (req, res) => {
-        const { turfId } = req.params;
-        const turfUpdates = req.body;
-        const status = await dao.updateTurf(
-            turfId, turfUpdates);
-        res.send(status);
+  // Create new turf
+  app.post("/api/turfs", async (req, res) => {
+    try {
+      const turf = await turfDao.createTurf(req.body);
+      res.status(201).json(turf);
+    } catch (error) {
+      console.error("Error creating turf:", error);
+      res.status(500).json({ error: "Failed to create turf" });
     }
+  });
 
     const bookTurf = async (req, res) => {
         let { uid, tid } = req.params;
@@ -89,4 +76,15 @@ export default function TurfRoutes(app, db) {
 
 
 
+  // Delete turf
+  app.delete("/api/turfs/:turfId", async (req, res) => {
+    try {
+      const { turfId } = req.params;
+      const result = await turfDao.deleteTurf(turfId);
+      res.json(result);
+    } catch (error) {
+      console.error("Error deleting turf:", error);
+      res.status(500).json({ error: "Failed to delete turf" });
+    }
+  });
 }

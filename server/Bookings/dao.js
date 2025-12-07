@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import model from "./model.js";
 export default function BookingsDao(db) {
 
@@ -51,3 +52,12 @@ export default function BookingsDao(db) {
   };
 }
 
+// Get booked slots for a turf on a specific date
+export async function getBookedSlots(turfId, bookingDate) {
+  const bookings = await model.find({
+    turf: turfId,
+    bookingDate,
+    status: { $ne: "cancelled" },
+  });
+  return bookings.map((b) => b.bookingTime);
+}
