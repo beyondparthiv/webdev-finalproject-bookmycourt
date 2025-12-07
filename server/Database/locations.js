@@ -3,8 +3,8 @@ export default [
     "_id": "a1",
     "address": "360 Huntington Ave, Boston, MA 02115",
     "name": "Northeastern University",
-    "lat": 42.3505,
-    "long": -71.1054,
+    "latitude": 42.3505,
+    "longitude": -71.1054,
     "num_courts": 2,
     "courts": [
       {
@@ -58,14 +58,14 @@ export default [
   {"_id":"b2",
     "address":"77 Massachusetts Ave, Cambridge, MA 02139",
     "name":"Massachusetts Institute of Technology",
-    "lat":42.3601,
-    "long":-71.0942,
+    "latitude":42.3601,
+    "longitude":-71.0942,
     },
     {"_id":"c3",
     "address":"1 Harvard Yard, Cambridge, MA 02138",
     "name":"Harvard University",
-    "lat":42.3736,
-    "long":-71.1097,
+    "latitude":42.3736,
+    "longitude":-71.1097,
     "num_courts": 2,
     "courts": [
       {
@@ -118,8 +118,8 @@ export default [
     {"_id":"d4",
     "address":"40 University Rd, Medford, MA 02155",
     "name":"Tufts University",
-    "lat":42.4075,
-    "long":-71.1190,
+    "latitude":42.4075,
+    "longitude":-71.1190,
     "num_courts": 1,
     "courts": [
       {

@@ -46,7 +46,7 @@ export default function Users() {
         fetchUsers();
     }, []);
     return (
-        <div className="wd-people-table">
+        <div id="wd-people-table">
             <h2>Users</h2>
             <button onClick={createUser}
                 className="float-end btn btn-danger">
@@ -61,13 +61,9 @@ export default function Users() {
                 (e) => filterUsersByRole(e.target.value)}
                 className="form-select float-start w-25 wd-select-role" >
                 <option value="">All Roles</option>
-                <option value="ADMIN">Admin</option>
-                <option value="COURTOWNER">Court Owner</option>
-                <option value="CUSTOMER">Customer</option>
             </select>
-            <div className="d-flex justify-content-center">
-                <PeopleTable users={users} fetchUsers={fetchUsers}/>
-            </div>
+            <PeopleTable users={users}
+                fetchUsers={fetchUsers}/>
         </div>
     );
 }

@@ -4,13 +4,14 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "cd client && npm run dev",
-    "server": "cd server && node server.js"
+    "server": "cd server && node index.js"
   },
   "devDependencies": {
     "@types/google.maps": "^3.58.1",
     "@types/node": "^24.10.1",
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "esbuild": "^0.27.1",
     "vite": "^7.2.6"
   },
   "dependencies": {
@@ -25,7 +26,7 @@
     "uuid": "^13.0.0"
   },
   "description": "CS5610 - Group Final Project. BookMyCourt - a booking platform for pickle ball courts.",
-  "main": "server.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/beyondparthiv/webdev-finalproject-bookmycourt.git"
