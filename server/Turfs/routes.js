@@ -8,8 +8,15 @@ export default function TurfRoutes(app, db) {
     const findAllTurfs = async (req, res) => {
         const turfs = await dao.findAllTurfs();
         res.send(turfs);
-
     }
+
+    const findTurfById = async (req, res) => {
+        const { turfId } = req.params;
+        const turf = await dao.findTurfById(turfId);
+        res.send(turf);
+    }
+
+
     const findTurfsForUser = async (req, res) => {
         let { userId } = req.params;
         if (userId === "current") {
@@ -73,6 +80,7 @@ export default function TurfRoutes(app, db) {
     };
 
     app.get("/api/turfs", findAllTurfs);
+    app.get("/api/turfs/:turfId", findTurfById);
     app.get("/api/users/:userId/turfs", findTurfsForUser);
     app.post("/api/users/current/turfs", createTurf);
     app.delete("/api/turfs/:turfId",

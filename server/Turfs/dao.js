@@ -2,13 +2,25 @@ import { v4 as uuidv4 } from "uuid";
 import model from "./model.js";
 export default function TurfsDao(db) {
 
-    function findAllTurfs() {
+    async function findAllTurfs() {
         return model.find({}).then(turfs => 
             turfs.map(turf => ({
                 ...turf.toObject(),
                 id: turf._id
             }))
         );
+    }
+
+    async function findTurfById(turfId) {
+        return model.findById(turfId).then(turf => {
+            if (!turf) {
+                return null;
+            }
+            return {
+                ...turf.toObject(),
+                id: turf._id
+            };
+        });
     }
 
     async function findTurfsForUser(userId) {
@@ -40,6 +52,7 @@ export default function TurfsDao(db) {
 
     return {
         findAllTurfs,
+        findTurfById,
         findTurfsForUser,
         createTurf,
         deleteTurf,

@@ -9,6 +9,7 @@ import cors from "cors"
 import mongoose from "mongoose";
 import TurfRoutes from "./Turfs/routes.js";
 import BookingRoutes from "./Bookings/routes.js";
+import LocationsRoutes from "./Locations/routes.js";
 const app = express();
 
 const CONNECTION_STRING = process.env.MONGODB_URI;
@@ -38,5 +39,6 @@ app.use(express.json());
 UserRoutes(app, db);
 TurfRoutes(app, db);
 BookingRoutes(app, db);
+LocationsRoutes(app, db);
 
 app.listen(4000);
