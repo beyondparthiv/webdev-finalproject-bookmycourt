@@ -24,6 +24,7 @@ export default function LocationRoutes(app) {
     }
   });
 
+
   app.get("/api/locations/city/:city", async (req, res) => {
     try {
       const locations = await locationDao.findLocationsByCity(req.params.city);
@@ -31,6 +32,16 @@ export default function LocationRoutes(app) {
     } catch (error) {
       console.error("Error fetching locations:", error);
       res.status(500).json({ error: "Failed to fetch locations" });
+    }
+  });
+
+   app.get("/api/locations/turfs/:locationId", async (req, res) => {
+    try {
+      const locations = await locationDao.findAllCourtsAtLocation(req.params.locationId);
+      res.json(locations.courts);
+    } catch (error) {
+      console.error("Error fetching location's courts:", error);
+      res.status(500).json({ error: "Failed to fetch location's courts" });
     }
   });
 
