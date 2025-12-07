@@ -3,16 +3,17 @@ import BookingsDao from './dao.js';
 export default function BookingRoutes(app, db) {
     const dao = BookingsDao(db);
 
-    const bookTurf = (req, res) => {
-        const { turfId } = req.params;
-        const { userId } = req.body;
-        const newBooking = dao.bookTurf(userId, turfId);
+    const bookTurf = async (req, res) => {
+        console.log("params:", req.params);
+        const { turfId, userId } = req.params;
+        const { date, time } = req.body;
+        const newBooking = await dao.bookTurf(userId, turfId, time, date);
         res.send(newBooking);
     }
 
-    const deleteBookingForUser = (req, res) => {
+    const deleteBookingForUser =  async (req, res) => {
         const { turfId, userId } = req.params;
-        const status = dao.deleteBookingForUser(userId, turfId);
+        const status = await dao.deleteBookingForUser(userId, turfId);
         res.send(status);
     }
 
@@ -34,7 +35,7 @@ export default function BookingRoutes(app, db) {
         // res.json(bookings);
     };
  
-    app.post("/api/turfs/:turfId/bookings", bookTurf);
+    app.post("/api/turfs/:turfId/bookings/:userId", bookTurf);
     app.delete("/api/turfs/:turfId/bookings/:userId", deleteBookingForUser);
     app.get("/api/users/:userId/bookings", fetchBookings);
 }

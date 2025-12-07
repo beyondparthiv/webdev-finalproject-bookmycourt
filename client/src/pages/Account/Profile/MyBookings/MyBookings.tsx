@@ -16,6 +16,7 @@ export default function MyBookings() {
         const ibooked = bookings.some((booking: { user: { _id: string }; turf: { _id: string } }) =>
             booking.user._id === userId &&
             booking.turf._id === turfId);
+        console.log("isBooked check:", { turfId, userId, ibooked });
         return ibooked;
     }
 
@@ -38,6 +39,7 @@ export default function MyBookings() {
         try {
             if (currentUser?._id) {
                 const bookings = await client.fetchAllBookings(currentUser._id);
+                console.log("Fetched bookings:", bookings);
                 dispatch(setBookings(bookings));
             } else {
                 console.log("No currentUser._id, skipping fetch");

@@ -17,12 +17,14 @@ export default function BookingsDao(db) {
       (booking) => booking.user);
   }
 
-  function bookTurf(userId, turfId, bookingTime) {
+  function bookTurf(userId, turfId, bookingTime, bookingDate) {
+    console.log("Booking turf:", turfId, "for user:", userId, "at time:", bookingTime);
     return model.create({
       user: userId,
       turf: turfId,
       bookingTime: bookingTime,
-      _id: `${userId}-${turfId}-${bookingTime}`,
+      bookingDate: bookingDate,
+      _id: `${userId}-${turfId}-${bookingTime}-${bookingDate}`,
     });
   }
 

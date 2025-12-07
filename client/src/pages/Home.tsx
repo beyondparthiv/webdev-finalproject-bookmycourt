@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import type { Turf } from "../types/turf.types";
 import { getAllTurfs } from "../data/mockTurfs";
+import * as client from "./client";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -54,7 +55,8 @@ const Home: React.FC = () => {
 
   const fetchTurfs = async () => {
     try {
-      const response = await fetch("/api/turfs/nearby");
+      const response = await client.fetchAllTurfs();
+      console.log("Fetched turfs:", response);
       const data = await response.json();
       setTurfs(data);
       setFilteredTurfs(data);

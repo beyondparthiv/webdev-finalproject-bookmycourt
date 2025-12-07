@@ -10,10 +10,14 @@ import {
 import type { TurfDetails as TurfDetailsType, TimeSlot } from '../types/turf.types';
 import { getTurfById } from '../data/mockTurfs';
 import './TurfDetails.css';
+import { bookTurf } from './client';
+import { useSelector } from 'react-redux';
 
 const TurfDetails: React.FC = () => {
+   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+
 
   const [turf, setTurf] = useState<TurfDetailsType | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>('');
@@ -117,13 +121,8 @@ const TurfDetails: React.FC = () => {
 
   const handleBookNow = () => {
     if (selectedSlot && turf) {
-      navigate('/booking', {
-        state: {
-          turf: turf,
-          selectedSlot: selectedSlot,
-          selectedDate: selectedDate,
-        },
-      });
+      bookTurf(currentUser?._id, turf.id, selectedDate, selectedSlot.time);
+      alert(`✅ Booking confirmed for ${turf.name} on ${selectedDate} (${selectedSlot.time})`);
     }
   };
 
