@@ -335,15 +335,6 @@
   font-family: 'Poppins', 'Roboto', sans-serif;
 }
 
-.footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 14px;
-  color: #999;
-  border-top: 1px solid #e0e0e0;
-  margin-top: 40px;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .carousel-card {
