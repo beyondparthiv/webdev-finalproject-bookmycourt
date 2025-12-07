@@ -10,7 +10,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import type { Turf } from "../types/turf.types";
 import { getAllTurfs } from "../data/mockTurfs";
-import * as client from "./client";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -55,8 +54,7 @@ const Home: React.FC = () => {
 
   const fetchTurfs = async () => {
     try {
-      const data = await client.fetchAllTurfs();
-      console.log("Fetched turfs:", data);
+      const data = await turfService.getAll();
       setTurfs(data);
       setFilteredTurfs(data);
       setFeaturedTurfs(data.slice(0, 4));
@@ -198,11 +196,6 @@ const Home: React.FC = () => {
               </div>
             )}
           </div>
-        </div>
-        <div className="footer">
-          <p>Created by Bridget Leary (SEC 05), Isabel Cuddihy (SEC 05), Ankita Das (SEC 05), and Parthiv Dharmendra Modi (?)</p>
-          <p>Client repository: _____</p>
-          <p>Server repository: _____</p>
         </div>
       </div>
     </>

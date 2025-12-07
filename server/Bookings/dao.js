@@ -1,53 +1,76 @@
 import model from "./model.js";
-export default function BookingsDao(db) {
 
-  async function findAllBookings() {
-    return await model.find({}).populate("turf").populate("user");
-  }
+export async function findAllBookings() {
+  return model.find({}).populate("turf").populate("user");
+}
 
-  async function findTurfsForUser(userId) {
-    const bookings = await model.find({ user: userId }).populate("turf");
-    return bookings.map((booking) => booking.turf);
-  }
+export async function findBookingById(bookingId) {
+  return model.findById(bookingId).populate("turf").populate("user");
+}
 
-  async function findUsersForTurf(turfId) {
-    const bookings = await model.find(
-      { course: courseId }).populate("user");
-    return bookings.map(
-      (booking) => booking.user);
-  }
+export async function findBookingsForUser(userId) {
+  return model.find({ user: userId }).populate("turf");
+}
 
-  function bookTurf(userId, turfId, bookingTime, bookingDate) {
-    console.log("Booking turf:", turfId, "for user:", userId, "at time:", bookingTime);
-    return model.create({
-      user: userId,
-      turf: turfId,
-      bookingTime: bookingTime,
-      bookingDate: bookingDate,
-      _id: `${userId}-${turfId}-${bookingTime}-${bookingDate}`,
-    });
-  }
+export async function findBookingsForTurf(turfId) {
+  return model.find({ turf: turfId }).populate("user");
+}
 
-  function deleteBookingForUser(user, turf, bookingTime) {
-    return model.deleteOne({ user, turf, bookingTime });
-  }
+export async function findUsersForTurf(turfId) {
+  const bookings = await model.find({ turf: turfId }).populate("user");
+  return bookings.map((booking) => booking.user);
+}
 
-  function deleteAllBookingsForTurf(turfId) {
-    return model.deleteMany({ turf: turfId });
-  }
+export async function findTurfsForUser(userId) {
+  const bookings = await model.find({ user: userId }).populate("turf");
+  return bookings.map((booking) => booking.turf);
+}
 
-  function fetchBookings(userId) {
-    return model.find({ user: userId });
-  }
+export function createBooking(userId, turfId, bookingDate, bookingTime, duration, totalPrice) {
+  return model.create({
+    _id: uuidv4(),
+    user: userId,
+    turf: turfId,
+    bookingDate,
+    bookingTime,
+    duration,
+    totalPrice,
+    status: "confirmed",
+  });
+}
 
-  return {
-    findAllBookings,
-    findTurfsForUser,
-    findUsersForTurf,
-    bookTurf,
-    deleteBookingForUser,
-    deleteAllBookingsForTurf,
-    fetchBookings
-  };
+export function updateBooking(bookingId, updates) {
+  return model.updateOne({ _id: bookingId }, { $set: updates });
+}
+
+export function cancelBooking(bookingId) {
+  return model.updateOne({ _id: bookingId }, { $set: { status: "cancelled" } });
+}
+
+export function deleteBooking(bookingId) {
+  return model.deleteOne({ _id: bookingId });
+}
+
+export function deleteBookingForUser(userId, turfId, bookingDate, bookingTime) {
+  return model.deleteOne({ user: userId, turf: turfId, bookingDate, bookingTime });
+}
+
+export function deleteAllBookingsForTurf(turfId) {
+  return model.deleteMany({ turf: turfId });
+}
+
+export function deleteAllBookingsForUser(userId) {
+  return model.deleteMany({ user: userId });
+}
+
+// Check if slot is available
+export async function isSlotAvailable(turfId, bookingDate, bookingTime) {
+  const existing = await model.findOne({
+    turf: turfId,
+    bookingDate,
+    bookingTime,
+    status: { $ne: "cancelled" },
+  });
+  return !existing;
 }
 
