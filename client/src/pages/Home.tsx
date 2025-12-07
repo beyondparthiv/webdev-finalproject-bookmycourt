@@ -9,7 +9,6 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import type { Turf } from "../types/turf.types";
-import { turfService } from "../services/api";
 import { getAllTurfs } from "../data/mockTurfs";
 import * as client from "./client";
 
@@ -20,8 +19,6 @@ const Home: React.FC = () => {
   const [turfs, setTurfs] = useState<Turf[]>([]);
   const [filteredTurfs, setFilteredTurfs] = useState<Turf[]>([]);
   const [featuredTurfs, setFeaturedTurfs] = useState<Turf[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     detectLocation();
@@ -57,23 +54,15 @@ const Home: React.FC = () => {
   };
 
   const fetchTurfs = async () => {
-    setLoading(true);
-    setError(null);
-
     try {
       const data = await client.fetchAllTurfs();
       console.log("Fetched turfs:", data);
       setTurfs(data);
       setFilteredTurfs(data);
-      // Featured turfs: highest rated
-      const featured = [...data].sort((a, b) => b.rating - a.rating).slice(0, 4);
-      setFeaturedTurfs(featured);
-    } catch (err) {
-      console.error("Error fetching turfs:", err);
-      setError("Failed to load turfs from server. Using sample data.");
+      setFeaturedTurfs(data.slice(0, 4));
+    } catch (error) {
+      console.error("Error fetching turfs:", error);
       loadMockData();
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -101,14 +90,6 @@ const Home: React.FC = () => {
     navigate("/account");
   };
 
-  if (loading) {
-    return (
-      <div className="home-container">
-        <div className="loading">Loading turfs...</div>
-      </div>
-    );
-  }
-
   return (
     <>
       <div className="home-container">
@@ -122,9 +103,6 @@ const Home: React.FC = () => {
             <FaUser />
           </div>
         </div>
-
-        {/* Error Banner */}
-        {error && <div className="error-banner">{error}</div>}
 
         {/* Search Bar */}
         <div className="search-section">

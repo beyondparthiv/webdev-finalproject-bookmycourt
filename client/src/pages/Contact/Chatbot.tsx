@@ -80,7 +80,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ geminiService }) => {
     <div>
       <h2>Chat with Us</h2>
       
-      <div className = "" style={{ border: '3px solid black', overflowY: 'scroll', height: '400px', padding: '10px' }}>
+      <div style={{ border: '3px solid black', overflowY: 'scroll', height: '400px', padding: '10px' }}>
         {messages.map((message, index) => (
           <div key={index} style={{ marginBottom: '10px', textAlign: message.role === 'user' ? 'right' : 'left' }}>
             <div>
