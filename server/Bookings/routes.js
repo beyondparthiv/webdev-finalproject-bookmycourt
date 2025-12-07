@@ -10,7 +10,6 @@ export default function BookingRoutes(app) {
       console.error("Error fetching bookings:", error);
       res.status(500).json({ error: "Failed to fetch bookings" });
     }
-  });
 
   // Get booking by ID
   app.get("/api/bookings/:bookingId", async (req, res) => {
@@ -24,12 +23,6 @@ export default function BookingRoutes(app) {
       console.error("Error fetching booking:", error);
       res.status(500).json({ error: "Failed to fetch booking" });
     }
-  });
-
-  // Get bookings for current user
-  app.get("/api/users/:userId/bookings", async (req, res) => {
-    try {
-      let { userId } = req.params;
 
       if (userId === "current") {
         const currentUser = req.session["currentUser"];

@@ -5,23 +5,28 @@ export function findAllTurfs() {
   return model.find();
 }
 
-export function findTurfById(turfId) {
-  return model.findById(turfId);
-}
+    function createTurf(turf) {
+        const newTurf = { ...turf, _id: uuidv4() };
+        console.log("New turf: ", newTurf);
+        return model.create(newTurf);
+    }
 
-export function createTurf(turf) {
-  const newTurf = { ...turf, _id: turf._id || uuidv4() };
-  return model.create(newTurf);
-}
+    function deleteTurf(turfId) {
+        return model.deleteOne({ _id: turfId });
+    }
 
-export function deleteTurf(turfId) {
-  return model.deleteOne({ _id: turfId });
-}
+    function updateTurf(turfId, turfUpdates) {
+        return model.updateOne(
+            { _id: turfId },
+            { $set: turfUpdates }
+        )
+    }
 
-export function updateTurf(turfId, turfUpdates) {
-  return model.updateOne({ _id: turfId }, { $set: turfUpdates });
-}
-
-export function findTurfsByIds(turfIds) {
-  return model.find({ _id: { $in: turfIds } });
+    return {
+        findAllTurfs,
+        findTurfsForUser,
+        createTurf,
+        deleteTurf,
+        updateTurf
+    };
 }

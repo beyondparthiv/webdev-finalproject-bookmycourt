@@ -1,17 +1,17 @@
 /* Map Page Styles */
-
+ 
 .map-page-container {
   width: 100%;
   min-height: calc(100vh - 60px);
   background-color: #ffffff;
   padding: 20px;
 }
-
+ 
 .map-header {
   text-align: center;
   margin-bottom: 30px;
 }
-
+ 
 .map-header h1 {
   font-family: 'Poppins', 'Roboto', sans-serif;
   font-size: 32px;
@@ -19,14 +19,14 @@
   color: #333;
   margin: 0 0 10px 0;
 }
-
+ 
 .map-header p {
   font-family: 'Poppins', 'Roboto', sans-serif;
   font-size: 16px;
   color: #666;
   margin: 0;
 }
-
+ 
 /* Map Container */
 .map-wrapper {
   max-width: 1200px;
@@ -35,13 +35,13 @@
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
+ 
 .map-container {
   width: 100%;
   height: 600px;
   position: relative;
 }
-
+ 
 /* Loading State */
 .map-loading {
   display: flex;
@@ -62,14 +62,14 @@
   max-width: 320px;
   font-family: 'Poppins', 'Roboto', sans-serif;
 }
-
+ 
 .info-window-header h3 {
   font-size: 18px;
   font-weight: 600;
   color: #333;
   margin: 0 0 8px 0;
 }
-
+ 
 .info-window-address {
   font-size: 13px;
   color: #666;
@@ -78,25 +78,25 @@
   align-items: center;
   gap: 4px;
 }
-
+ 
 .info-window-address::before {
   content: '📍';
   font-size: 12px;
 }
-
+ 
 .courts-label {
   font-size: 14px;
   font-weight: 500;
   color: #333;
   margin: 0 0 12px 0;
 }
-
+ 
 .info-window-courts {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-
+ 
 .info-window-court-btn {
   display: flex;
   justify-content: space-between;
@@ -111,25 +111,25 @@
   width: 100%;
   text-align: left;
 }
-
+ 
 .info-window-court-btn:hover {
   background-color: #e8f5e9;
   border-color: #4caf50;
   transform: translateX(4px);
 }
-
+ 
 .court-btn-name {
   font-size: 14px;
   font-weight: 500;
   color: #333;
 }
-
+ 
 .court-btn-price {
   font-size: 14px;
   font-weight: 600;
   color: #4caf50;
 }
-
+ 
 .no-courts {
   font-size: 14px;
   color: #999;
@@ -137,70 +137,70 @@
   padding: 12px;
   font-style: italic;
 }
-
+ 
 /* Override default Google Maps InfoWindow styles */
 .gm-style .gm-style-iw-c {
   padding: 12px !important;
   border-radius: 12px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
-
+ 
 .gm-style .gm-style-iw-d {
   overflow: auto !important;
   max-height: 400px !important;
 }
-
+ 
 .gm-style-iw-tc::after {
   background: white !important;
 }
-
+ 
 /* Responsive Design */
 @media (max-width: 768px) {
   .map-page-container {
     padding: 16px;
   }
-
+ 
   .map-header h1 {
     font-size: 24px;
   }
-
+ 
   .map-header p {
     font-size: 14px;
   }
-
+ 
   .map-container {
     height: 400px;
   }
-
+ 
   .map-wrapper {
     border-radius: 12px;
   }
-
+ 
   .legend-items {
     flex-direction: column;
     gap: 12px;
   }
-
+ 
   .info-window-content {
     min-width: 200px;
     max-width: 280px;
   }
 }
-
+ 
 @media (max-width: 480px) {
   .map-container {
     height: 350px;
   }
-
+ 
   .map-header h1 {
     font-size: 20px;
   }
-
+ 
   .info-window-content {
     min-width: 180px;
     max-width: 240px;
   }
-
+ 
   .info-window-court-btn {
     padding: 10px 12px;
   }

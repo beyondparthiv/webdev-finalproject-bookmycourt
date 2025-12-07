@@ -23,7 +23,7 @@ export const FAQ: React.FC = () => {
     },
     {
       question: "How do I register my own court for rentals?",
-      answer: "Court owners must register their courts and pass our screening process. Please reach out to us via the contact form for more information."
+      answer: "We offer a service for court owners to list their courts. Please reach out to us via the contact form for more information."
     },
     {
       question: "Do you provide equipment rentals?",

@@ -1,34 +1,27 @@
+import { create } from "domain";
 import { v4 as uuidv4 } from "uuid";
-import model from "./model.js";
 
-export function createLocation(location) {
-  const newLocation = { ...location, _id: uuidv4() };
-  return model.create(newLocation);
-}
+export default function LocationDao(db) {
+    let { locations } = db;
 
-export function findAllLocations() {
-  return model.find();
-}
+    const createLocation = (location) => {
+        const newLocation = { ...location, _id: uuidv4() };
+        locations = [...locations, newLocation];
+        return newLocation;
+    };
+    const findAllLocations = () => locations;
 
-export function findAllCourtsAtLocation(locationId) {
-  return model.findById(locationId).then(location => location ? location.courts : []);
-}
-export function findLocationById(locationId) {
-  return model.findById(locationId);
-}
+    const findLocationById = (locationId) =>
+        locations.find((location) => location._id === locationId);
 
-export function findLocationByName(name) {
-  return model.findOne({ name: new RegExp(name, "i") });
-}
+    const findLocationByName = (name) =>
+        locations.find((location) => location.name === name);
 
-export function findLocationsByCity(city) {
-  return model.find({ city: new RegExp(city, "i") });
-}
+    const deleteLocation = (locationId) =>
+        (locations = locations.filter((l) => l._id !== locationId));
 
-export function updateLocation(locationId, updates) {
-  return model.updateOne({ _id: locationId }, { $set: updates });
-}
-
-export function deleteLocation(locationId) {
-  return model.deleteOne({ _id: locationId });
+    return {
+        createLocation, findAllLocations, findLocationById,
+        findLocationByName, deleteLocation
+    };
 }
