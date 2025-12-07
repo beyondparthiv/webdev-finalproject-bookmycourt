@@ -198,6 +198,11 @@ const Home: React.FC = () => {
             )}
           </div>
         </div>
+        <div className="footer">
+          <p>Created by Bridget Leary (SEC 05), Isabel Cuddihy (SEC 05), Ankita Das (SEC 05), and Parthiv Dharmendra Modi (?)</p>
+          <p>Client repository: _____</p>
+          <p>Server repository: _____</p>
+        </div>
       </div>
     </>
   );
