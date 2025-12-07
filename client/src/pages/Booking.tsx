@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Booking.css";
-import * as client from "./client";
 
 type Slot = { time: string; status: "available" | "booked" };
 
@@ -75,13 +74,11 @@ const Booking: React.FC = () => {
 
   const slots = courtSlots[selectedCourt];
 
-  const onBook = () => {
+  const handleBooking = () => {
     if (!selectedDate || !selectedSlot) {
       alert("Please select both date and slot!");
       return;
     }
-    console.log("Booking:", selectedCourt, selectedDate, selectedSlot);
-    //bookTurf(selectedCourt, selectedDate, selectedSlot);
     alert(`✅ Booking confirmed for ${selectedCourt} on ${selectedDate} (${selectedSlot})`);
   };
 
@@ -122,7 +119,7 @@ const Booking: React.FC = () => {
           </div>
         </div>
 
-        <button className="book-btn" onClick={() => onBook()}>Book Now</button>
+        <button className="book-btn" onClick={handleBooking}>Book Now</button>
       </div>
     </div>
   );

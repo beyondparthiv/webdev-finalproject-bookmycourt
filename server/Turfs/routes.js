@@ -31,42 +31,43 @@ export default function TurfRoutes(app, db) {
         res.json(turfs);
     };
 
-    const createTurf= async (req, res) => {
-        const currentUser = req.session["currentUser"];
-        const newCourse = await dao.createTurf(req.body);
-        const booking = await bookingsDao.bookTurf(
-            currentUser._id,
-            newCourse._id,
-            Date.now()
-        );
-        res.json({course : newCourse, booking: booking});
-    };
-
-    const deleteTurf = async (req, res) => {
-        const { turfId } = req.params;
-        await bookingsDao.deleteAllBookingsForTurf(courseId);
-        const status = await dao.deleteTurf(turfId);
-        res.send(status);
+  // Get turf by ID
+  app.get("/api/turfs/:turfId", async (req, res) => {
+    try {
+      const { turfId } = req.params;
+      const turf = await turfDao.findTurfById(turfId);
+      if (!turf) {
+        return res.status(404).json({ error: "Turf not found" });
+      }
+      res.json(turf);
+    } catch (error) {
+      console.error("Error fetching turf:", error);
+      res.status(500).json({ error: "Failed to fetch turf" });
     }
+  });
 
-    const updateTurf = async (req, res) => {
-        const { turfId } = req.params;
-        const turfUpdates = req.body;
-        const status = await dao.updateTurf(
-            turfId, turfUpdates);
-        res.send(status);
+  // Create new turf
+  app.post("/api/turfs", async (req, res) => {
+    try {
+      const turf = await turfDao.createTurf(req.body);
+      res.status(201).json(turf);
+    } catch (error) {
+      console.error("Error creating turf:", error);
+      res.status(500).json({ error: "Failed to create turf" });
     }
+  });
 
-    const bookTurf = async (req, res) => {
-        let { uid, tid } = req.params;
-        if (uid === "current") {
-            const currentUser = req.session["currentUser"];
-            uid = currentUser._id;
-        }
-        const status = await bookingsDao
-            .bookTurf(uid, tid);
-        res.send(status);
-    };
+  // Update turf
+  app.put("/api/turfs/:turfId", async (req, res) => {
+    try {
+      const { turfId } = req.params;
+      const result = await turfDao.updateTurf(turfId, req.body);
+      res.json(result);
+    } catch (error) {
+      console.error("Error updating turf:", error);
+      res.status(500).json({ error: "Failed to update turf" });
+    }
+  });
 
     const deleteBookingForUser = async (req, res) => {
         let { uid, tid } = req.params;

@@ -58,8 +58,10 @@ const Map: React.FC = () => {
   useEffect(() => {
     if (!locations.length || !mapRef.current) return;
 
-    const initMap = async () => {
+    if (!locations.length || !mapRef.current) return;
 
+    const initMap = async () => {
+     
       const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
         google.maps.importLibrary('marker') as Promise<google.maps.MarkerLibrary>,
@@ -114,9 +116,11 @@ const Map: React.FC = () => {
         const marker = new AdvancedMarkerElement({
           map: map,
           position: { lat: location.latitude, lng: location.longitude },
+          position: { lat: location.latitude, lng: location.longitude },
           title: location.name,
         });
 
+        marker.addListener('click', async () => {
         marker.addListener('click', async () => {
           console.log('Clicked:', location.name);
 
@@ -165,9 +169,14 @@ const Map: React.FC = () => {
           }, 100);
         });
       });
+      });
     };
 
     initMap();
+  }, [locations]);
+
+  if (loading) return <div>Loading map...</div>;
+  if (error) return <div>Error: {error}</div>;
   }, [locations]);
 
   if (loading) return <div>Loading map...</div>;

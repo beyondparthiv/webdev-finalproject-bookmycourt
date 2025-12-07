@@ -31,7 +31,7 @@ export function deleteUser(userId) {
 }
 
 export function findUsersByRole(role) {
-  return model.find({ role: role });
+  return model.find({ role });
 }
 
 export function findUsersByPartialName(partialName) {

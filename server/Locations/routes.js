@@ -1,57 +1,78 @@
-import LocationsDao from "./dao.js";
+import * as locationDao from "./dao.js";
 
-export default function LocationsRoutes(app, db) {
-    const dao = LocationsDao(db);
+export default function LocationRoutes(app) {
+  app.get("/api/locations", async (req, res) => {
+    try {
+      const locations = await locationDao.findAllLocations();
+      res.json(locations);
+    } catch (error) {
+      console.error("Error fetching locations:", error);
+      res.status(500).json({ error: "Failed to fetch locations" });
+    }
+  });
 
-    const createLocation = async (req, res) => {
-        try {
-            const newLocation = await dao.createLocation(req.body);
-            res.status(201).json(newLocation);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    };
+  app.get("/api/locations/:locationId", async (req, res) => {
+    try {
+      const location = await locationDao.findLocationById(req.params.locationId);
+      if (!location) {
+        return res.status(404).json({ error: "Location not found" });
+      }
+      res.json(location);
+    } catch (error) {
+      console.error("Error fetching location:", error);
+      res.status(500).json({ error: "Failed to fetch location" });
+    }
+  });
 
-    const deleteLocation = async (req, res) => {
-        try {
-            const { locationId } = req.params;
-            await dao.deleteLocation(locationId);
-            res.sendStatus(204);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    };
 
-    const findAllLocations = async (req, res) => {
-        try {
-            const locations = await dao.findAllLocations();
-            res.json(locations);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    };
+  app.get("/api/locations/city/:city", async (req, res) => {
+    try {
+      const locations = await locationDao.findLocationsByCity(req.params.city);
+      res.json(locations);
+    } catch (error) {
+      console.error("Error fetching locations:", error);
+      res.status(500).json({ error: "Failed to fetch locations" });
+    }
+  });
 
-    const findLocationById = async (req, res) => {
-        try {
-            const { locationId } = req.params;
-            const location = await dao.findLocationById(locationId);
-            if (location) {
-                res.json(location);
-            } else {
-                res.sendStatus(404);
-            }
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    };
+   app.get("/api/locations/turfs/:locationId", async (req, res) => {
+    try {
+      const locations = await locationDao.findAllCourtsAtLocation(req.params.locationId);
+      res.json(locations.courts);
+    } catch (error) {
+      console.error("Error fetching location's courts:", error);
+      res.status(500).json({ error: "Failed to fetch location's courts" });
+    }
+  });
 
-    const updateLocation = (req, res) => {
-        res.sendStatus(501);
-    };
+  app.post("/api/locations", async (req, res) => {
+    try {
+      const location = await locationDao.createLocation(req.body);
+      res.status(201).json(location);
+    } catch (error) {
+      console.error("Error creating location:", error);
+      res.status(500).json({ error: "Failed to create location" });
+    }
+  });
 
-    app.post("/api/locations", createLocation);
-    app.get("/api/locations", findAllLocations);
-    app.get("/api/locations/:locationId", findLocationById);
-    app.put("/api/locations/:locationId", updateLocation);
-    app.delete("/api/locations/:locationId", deleteLocation);
+  app.put("/api/locations/:locationId", async (req, res) => {
+    try {
+      await locationDao.updateLocation(req.params.locationId, req.body);
+      const updated = await locationDao.findLocationById(req.params.locationId);
+      res.json(updated);
+    } catch (error) {
+      console.error("Error updating location:", error);
+      res.status(500).json({ error: "Failed to update location" });
+    }
+  });
+
+  app.delete("/api/locations/:locationId", async (req, res) => {
+    try {
+      const result = await locationDao.deleteLocation(req.params.locationId);
+      res.json(result);
+    } catch (error) {
+      console.error("Error deleting location:", error);
+      res.status(500).json({ error: "Failed to delete location" });
+    }
+  });
 }
