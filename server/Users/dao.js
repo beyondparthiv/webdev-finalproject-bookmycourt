@@ -40,3 +40,15 @@ export function findUsersByPartialName(partialName) {
     $or: [{ firstName: { $regex: regex } }, { lastName: { $regex: regex } }],
   });
 }
+
+export const findUsersByRoleAndName = (role, name) => {
+  const regex = new RegExp(name, "i");
+  return model.find({
+    role: role,
+    $or: [
+      { firstName: { $regex: regex } },
+      { lastName: { $regex: regex } },
+      { username: { $regex: regex } },
+    ],
+  });
+};

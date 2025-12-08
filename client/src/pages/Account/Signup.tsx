@@ -1,148 +1,113 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useDispatch } from "react-redux";
+import * as client from "./client";
+import { setCurrentUser } from "./reducer";
 import "./Account.css";
 
 const Signup: React.FC = () => {
-  const navigate = useNavigate();
-  const { signup } = useAuth();
-
-  const [formData, setFormData] = useState({
+  const [user, setUser] = useState({
     username: "",
     password: "",
-    confirmPassword: "",
     firstName: "",
     lastName: "",
     email: "",
+    role: "CUSTOMER"
   });
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters");
-      return;
-    }
-
-    setLoading(true);
-
+  const signup = async () => {
     try {
-      await signup({
-        username: formData.username,
-        password: formData.password,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-      });
-      navigate("/");
+      const newUser = await client.signup(user);
+      dispatch(setCurrentUser(newUser));
+      navigate("/profile");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      setError(err.message || "Failed to create account");
-    } finally {
-      setLoading(false);
+      setError(err.response?.data?.message || "Signup failed");
     }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>Create Account</h2>
-        <p className="auth-subtitle">Join BookMyCourt today</p>
+        <h2>Sign Up</h2>
+        <p className="auth-subtitle">Create your BookMyCourt account</p>
 
         {error && <div className="error-message">{error}</div>}
 
-        <form onSubmit={handleSubmit}>
-          <div className="input-row">
-            <div className="input-group">
-              <label htmlFor="firstName">First Name</label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                placeholder="John"
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="lastName">Last Name</label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-                placeholder="Doe"
-              />
-            </div>
-          </div>
+        <div className="input-group">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            value={user.username}
+            onChange={(e) => setUser({ ...user, username: e.target.value })}
+            placeholder="Choose a username"
+          />
+        </div>
 
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="john@example.com"
-            />
-          </div>
+        <div className="input-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={user.password}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
+            placeholder="Choose a password"
+          />
+        </div>
 
-          <div className="input-group">
-            <label htmlFor="username">Username *</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              placeholder="johndoe"
-              required
-            />
-          </div>
+        <div className="input-group">
+          <label htmlFor="firstName">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            value={user.firstName}
+            onChange={(e) => setUser({ ...user, firstName: e.target.value })}
+            placeholder="Enter your first name"
+          />
+        </div>
 
-          <div className="input-group">
-            <label htmlFor="password">Password *</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Min 6 characters"
-              required
-            />
-          </div>
+        <div className="input-group">
+          <label htmlFor="lastName">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            value={user.lastName}
+            onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+            placeholder="Enter your last name"
+          />
+        </div>
 
-          <div className="input-group">
-            <label htmlFor="confirmPassword">Confirm Password *</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Confirm password"
-              required
-            />
-          </div>
+        <div className="input-group">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            value={user.email}
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
+            placeholder="Enter your email"
+          />
+        </div>
 
-          <button type="submit" className="auth-btn" disabled={loading}>
-            {loading ? "Creating account..." : "Sign Up"}
-          </button>
-        </form>
+        <div className="input-group">
+          <label htmlFor="role">Role</label>
+          <select
+            id="role"
+            value={user.role}
+            onChange={(e) => setUser({ ...user, role: e.target.value })}
+            className="form-control"
+          >
+            <option value="CUSTOMER">Customer</option>
+            <option value="COURTOWNER">Court Owner</option>
+          </select>
+        </div>
+
+        <button onClick={signup} className="auth-btn">
+          Sign Up
+        </button>
 
         <p className="auth-footer">
           Already have an account? <Link to="/signin">Sign In</Link>

@@ -1,17 +1,19 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useSelector } from "react-redux";
 import "./Navbar.css";
+import { signout } from "../pages/Account/reducer";
 
 const Navbar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, signout } = useAuth();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { currentUser } = useSelector((state: any) => state.account);
 
   const handleSignout = async () => {
     await signout();
     navigate("/");
-  };
+};
 
   return (
     <nav className="navbar">
@@ -29,14 +31,14 @@ const Navbar: React.FC = () => {
           <Link to="/contact">Contact</Link>
         </li>
 
-        {user ? (
+        {currentUser ? (
           <>
             <li className={location.pathname === "/my-bookings" ? "active" : ""}>
               <Link to="/my-bookings">My Bookings</Link>
             </li>
             <li className={location.pathname === "/profile" ? "active" : ""}>
               <Link to="/profile">
-                {user.firstName || user.username}
+                {currentUser.firstName || currentUser.username}
               </Link>
             </li>
             <li>
