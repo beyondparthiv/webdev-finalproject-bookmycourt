@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import "./Home.css";
 import {
   FaMapMarkerAlt,
@@ -14,6 +15,7 @@ import { getAllTurfs } from "../data/mockTurfs";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const { currentUser } = useSelector((state: any) => state.account);
   const [searchQuery, setSearchQuery] = useState("");
   const [location, setLocation] = useState("Detecting location...");
   const [turfs, setTurfs] = useState<Turf[]>([]);
@@ -64,7 +66,9 @@ const Home: React.FC = () => {
       setTurfs(data);
       setFilteredTurfs(data);
       // Featured turfs: highest rated
-      const featured = [...data].sort((a, b) => b.rating - a.rating).slice(0, 4);
+      const featured = [...data]
+        .sort((a, b) => b.rating - a.rating)
+        .slice(0, 4);
       setFeaturedTurfs(featured);
     } catch (err) {
       console.error("Error fetching turfs:", err);
@@ -73,6 +77,15 @@ const Home: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleBookNow = (turfId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!currentUser) {
+      navigate("/signin", { state: { from: `/turf/${turfId}` } });
+      return;
+    }
+    navigate(`/turf/${turfId}`);
   };
 
   const loadMockData = () => {
@@ -207,7 +220,12 @@ const Home: React.FC = () => {
                     </div>
                     <div className="turf-footer">
                       <span className="price">${turf.pricePerHour}/hour</span>
-                      <button className="book-btn">Book Now</button>
+                      <button
+                        className="book-btn"
+                        onClick={(e) => handleBookNow(turf.id, e)}
+                      >
+                        Book Now
+                      </button>
                     </div>
                   </div>
                 </div>

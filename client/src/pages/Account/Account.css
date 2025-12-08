@@ -14,3 +14,128 @@
     text-align: center;
     justify-content: center;
 }
+
+/* Profile Container */
+.wd-profile-screen {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-container {
+  width: 100%;
+}
+
+.profile-form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.profile-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.profile-buttons button {
+  flex: 1;
+}
+
+/* Users Section */
+#wd-people-table {
+  margin-top: 40px;
+  width: 100%;
+}
+
+#wd-people-table h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.users-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.users-controls button {
+  white-space: nowrap;
+}
+
+.users-controls input {
+  flex: 1;
+  min-width: 200px;
+}
+
+.users-controls select {
+  flex: 1;
+  min-width: 150px;
+  max-width: 200px;
+}
+
+/* People Table */
+.wd-people-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.wd-people-table table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.wd-people-table .wd-full-name {
+  cursor: pointer;
+}
+
+.wd-people-table .wd-full-name:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .users-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .users-controls input,
+  .users-controls select {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* People Table Improvements */
+.wd-people-table table {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.wd-people-table thead {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.wd-people-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.wd-people-table .btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.wd-people-table .form-control-sm,
+.wd-people-table .form-select-sm {
+  font-size: 0.875rem;
+}
+
+.wd-people-table td {
+  vertical-align: middle;
+}
+
+.wd-people-table .text-nowrap {
+  white-space: nowrap;
+}

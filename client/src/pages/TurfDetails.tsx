@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   FaArrowLeft,
   FaStar,
@@ -12,14 +13,14 @@ import type {
   TimeSlot,
 } from "../types/turf.types";
 import { turfService, bookingService } from "../services/api";
-import { useAuth } from "../context/AuthContext";
 import { getTurfById } from "../data/mockTurfs";
 import "./TurfDetails.css";
 
 const TurfDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { currentUser } = useSelector((state: any) => state.account);
 
   const [turf, setTurf] = useState<TurfDetailsType | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>("");
@@ -148,7 +149,7 @@ const TurfDetails: React.FC = () => {
     if (!selectedSlot || !turf || !id) return;
 
     // Check if user is logged in
-    if (!user) {
+    if (!currentUser) {
       navigate("/signin", {
         state: { from: `/turf/${id}` },
       });
@@ -159,7 +160,6 @@ const TurfDetails: React.FC = () => {
     setError(null);
 
     try {
-      // Extract start time from slot (e.g., "10:00 - 11:00" -> "10:00")
       const bookingTime = selectedSlot.time.split(" - ")[0];
 
       await bookingService.create(id, {
@@ -343,7 +343,7 @@ const TurfDetails: React.FC = () => {
               ? `Book Now - $${selectedSlot.price}`
               : "Select a Time Slot"}
         </button>
-        {!user && selectedSlot && (
+        {!currentUser && selectedSlot && (
           <p className="login-hint">You'll need to sign in to complete booking</p>
         )}
       </div>
